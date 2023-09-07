@@ -10,6 +10,9 @@ This repo present an Intelligent Course Management System (ICMS) with a facial l
 GUI: Each group may design GUI based on the understanding of the above user requirement (You could make your own design choice, because in real project, clients typically don’t know what they really want).
 Database: your database should have at least five tables. How to design the tables is your design choice.
 
+## Little Extra Function
+- Add timetable to Google calendar
+
 ## Development Tools.
 Face Login: Python + OpenCV (full codes provided.)
 GUI: Python GUI or Qt. (sample codes provided.)
