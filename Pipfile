@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pyside6 = "*"
 qtawesome = "*"
+opencv-python = "*"
+numpy = "*"
 
 [dev-packages]
 

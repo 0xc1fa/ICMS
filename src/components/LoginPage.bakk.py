@@ -1,6 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import PySide6.QtCore as QtCore
-from PySide6.QtCore import Qt, QRectF, QPoint, QTimer, Signal
+from PySide6.QtCore import Qt, QRectF, QPoint
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QVBoxLayout,
@@ -19,12 +19,12 @@ from PySide6.QtGui import (
     QPen,
     QPainterPath,
     QAction,
-    QPixmap,
-    QImage,
+    QPixmap
 )
 import qtawesome as qta
 import cv2
 import numpy as np
+
 
 class StyledLabel(QLabel):
     def __init__(self, *argv):
@@ -45,52 +45,6 @@ class StyledLabel(QLabel):
 class StyledLoginButton(QPushButton):
     def __init__(self, *argv):
         super().__init__(*argv)
-        self.disabled = False
-        self.setStyleSheet("""
-            QPushButton {
-                margin: 0;
-                background-color: #8ec63f;
-                border-radius: 5px;
-                color: #111111;
-                padding: 10px;
-                border: none
-            }
-            QPushButton:hover {
-                background-color: #7db52e;
-            }
-            QPushButton:pressed {
-                background-color: #8ec63f;
-            }
-        """)
-    
-    def toggle(self):
-        if self.disabled:
-            self.enable()
-        else:
-            self.disable()
-        self.disabled = not self.disabled
-    
-    def disable(self):
-        self.setText("Cancel")
-        self.setStyleSheet("""
-            QPushButton {
-                margin: 0;
-                background-color: #aaaaaa;
-                border-radius: 5px;
-                color: #111111;
-                padding: 10px;
-                border: none
-            }
-            QPushButton:hover {
-                background-color: #999999;
-            }
-            QPushButton:pressed {
-                background-color: #aaaaaa;
-            }
-        """)
-        
-    def enable(self):
-        self.setText("LOG IN")
         self.setStyleSheet("""
             QPushButton {
                 margin: 0;
@@ -149,72 +103,49 @@ class SyledLineEdit(QLineEdit):
                 border: 1px solid #4f4f4f;
             }
         """)
-        
-    def toggle(self):
-        if self.isEnabled():
-            self.setEnabled(False)
-        else:
-            self.setEnabled(True)
+
 
 
 class LoginSectionRight(QWidget):
     def __init__(self, image_path):
         super().__init__()
-        self.bgimage = QPixmap(image_path)
         self.image = QPixmap(image_path)
         self.setFixedWidth(400)
         self.setFixedHeight(500)
-        self.timer = QTimer()
+
+    # def paintEvent(self, event):
+    #     painter = QPainter(self)
         
-    def paintEvent(self, event):
-        painter = QPainter(self)
+    #     # Draw the image
+    #     painter.drawPixmap(0, 0, self.width(), self.height(), self.image)
         
-        painter.drawPixmap(0, 0, self.width(), self.height(), self.image)
+    #     # Draw the semi-transparent white overlay
+    #     overlay_color = QColor(255, 255, 255, 128)  # The last value (128) is the alpha (transparency)
+    #     painter.fillRect(self.rect(), overlay_color)
         
-        overlay_color = QColor(255, 255, 255, 0)
-        painter.fillRect(self.rect(), overlay_color)
-        
-    def toggle_camera(self):
-        if self.timer.isActive():
-            self.timer.stop()
-            self.image = self.bgimage
-            self.update()
-            self.cap.release()
-        else:
-            self.capture_face()
-            self.timer.start(20)
-    
     def capture_face(self):
         self.cap = cv2.VideoCapture(0)
         
         if not self.cap.isOpened():
             print("Could not open camera!")
             return
-        
+        self.timer = QTimer()
         self.timer.timeout.connect(self.updateFrame)
         self.timer.start(20)
         
     def updateFrame(self):
-        ret, frame = self.cap.read()
+        ret, frame = self.cap.read() # Read a frame from the camera
         if ret:
+            # Convert the frame to RGB since OpenCV uses BGR format
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             height, width, channel = frame.shape
-            x_start = (width - 400) // 2
-            y_start = (height - 500) // 2
-            cropped_frame = frame[y_start:y_start+500, x_start:x_start+400]
-            
-            cropped_frame = np.ascontiguousarray(cropped_frame)
-            
-            bytesPerLine = 3 * 400
-            qImg = QImage(cropped_frame.data, 400, 500, bytesPerLine, QImage.Format_RGB888)
-            self.image = QPixmap.fromImage(qImg)
-            self.update()
+            bytesPerLine = 3 * width
+            qImg = QImage(frame.data, width, height, bytesPerLine, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qImg)
+            self.image.setPixmap(pixmap)
 
 
 class LoginSectionLeft(QWidget):
-    
-    login_singal = Signal()
-    
     def __init__(self):
         super().__init__()
         self.setStyleSheet("""
@@ -230,11 +161,12 @@ class LoginSectionLeft(QWidget):
         
         self.setFixedWidth(300)
         self.setFixedHeight(500)
-        self.title = StyledLabel("WELCOME BACK...")
+        self.title = StyledLabel("Welcome Back...")
         self.username_field = SyledLineEdit(self)
         logo_action = QAction(self)
         logo_action.setIcon(qta.icon("fa.home", color='gray'))
         self.username_field.addAction(logo_action, QLineEdit.LeadingPosition)
+        # self.username_field = AnimatedLineEdit("Username", self)
         self.login_button = StyledLoginButton("LOG IN", self)
         self.faq_button = StyledButton("FAQ", self)
         self.contectus_button = StyledButton("Contect Us", self)
@@ -253,8 +185,6 @@ class LoginSectionLeft(QWidget):
         layout.addStretch()
         layout.setSpacing(15)
         
-        self.login_button.clicked.connect(self.login_singal.emit)
-        
         self.setLayout(layout)
     
     def paintEvent(self, event):
@@ -264,6 +194,7 @@ class LoginSectionLeft(QWidget):
         rect_width = 300
         rect_height = 500
 
+        # Calculate the position to center the rectangle
         top_left_x = (self.width() - rect_width) / 2
         top_left_y = (self.height() - rect_height) / 2
 
@@ -277,8 +208,6 @@ class LoginSectionLeft(QWidget):
         
         
 class LoginSection(QWidget):
-    
-    
     def __init__(self):
         super().__init__()
         self.setStyleSheet("border-radius: 5px;")
@@ -288,15 +217,13 @@ class LoginSection(QWidget):
         self.setFixedHeight(500)
         layout = QHBoxLayout()
         login_section_left = LoginSectionLeft()
-        login_section_right = LoginSectionRight("src/assets/retro-vaporwave-cropped.png")
+        login_section_right = LoginSectionRight("src/assets/photo01@750.jpg")
         layout.addWidget(login_section_left)
         layout.addWidget(login_section_right)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         self.setLayout(layout)
-        login_section_left.login_singal.connect(login_section_right.toggle_camera)
-        login_section_left.login_singal.connect(login_section_left.login_button.toggle)
-        login_section_left.login_singal.connect(login_section_left.username_field.toggle)
+        
         self.draw_shadow()
         
     def draw_shadow(self):
@@ -316,9 +243,17 @@ class LoginPage(QWidget):
         """)
         self.setAttribute(QtCore.Qt.WA_StyledBackground)
         
+        # palette = QPalette()
+        # palette.setColor(QPalette.Window, QColor(20, 20, 20))
+        # self.setPalette(palette)
+        # self.setAutoFillBackground(True)
+        
+        
         layout = QHBoxLayout()
         login_section = LoginSection()
         layout.setSpacing(0)
+        # layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(login_section)
         layout.setSpacing(0)
         self.setLayout(layout)
+        

@@ -16,10 +16,10 @@ from components.SettingsSection import SettingsSection
 class MainPage(QWidget):
     def __init__(self):
         super().__init__()
-        palette = QPalette()
-        palette.setColor(QPalette.Window, QColor(20, 20, 20))
-        self.setPalette(palette)
-        self.setAutoFillBackground(True)
+        # palette = QPalette()
+        # palette.setColor(QPalette.Window, QColor(20, 20, 20))
+        # self.setPalette(palette)
+        # self.setAutoFillBackground(True)
         
         layout = QHBoxLayout()
         self.sidebar = Sidebar()
