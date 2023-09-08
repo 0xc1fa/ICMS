@@ -30,7 +30,6 @@ class SidebarButton(QPushButton):
                 padding: 10px 10px 10px 0 ;
                 border: none;
                 padding-left: 15px;
-                transition: 2s;
             }
             
             QPushButton:hover {
