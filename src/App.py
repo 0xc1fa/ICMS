@@ -4,12 +4,9 @@ from components.Sidebar import Sidebar
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
-    QListWidget,
-    QVBoxLayout,
     QStackedWidget,
     QHBoxLayout,
     QWidget,
-    QLabel,
     QStackedWidget
 )
 
@@ -25,22 +22,13 @@ class App(QMainWindow):
 
         
         layout = QHBoxLayout()
-        # self.sidebar = Sidebar()
         self.pages = QStackedWidget(self)
+        self.login_page = LoginPage()
+        # self.login_page.setStyleSheet("background-image: url(./assets/photo01@750.jpg); background-attachment: fixed")
         self.main_page = MainPage()
+        self.pages.addWidget(self.login_page)
         self.pages.addWidget(self.main_page)
-        # self.sidebar.home_singal.connect(lambda: self.pages.setCurrentIndex(0))
-        # self.sidebar.history_singal.connect(lambda: self.pages.setCurrentIndex(1))
-        # self.sidebar.settings_singal.connect(lambda: self.pages.setCurrentIndex(2))
-        # self.home_page = HomeSection()
-        # self.history_page = HistorySection()
-        # self.settings_page = SettingsSection()
-        # self.pages.addWidget(self.home_page)
-        # self.pages.addWidget(self.history_page)
-        # self.pages.addWidget(self.settings_page)
-        
-        # self.sidebar.currentRowChanged.connect(self.main_content.display_content)
-        
+        self.pages.setCurrentIndex(0)  # set login page as default page
         layout.addWidget(self.pages)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)

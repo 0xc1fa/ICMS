@@ -82,7 +82,7 @@ class Sidebar(QWidget):
         layout.addWidget(self.settings_button)   
         layout.addStretch()
         layout.addWidget(self.toggle_button)
-        layout.setSpacing(0) 
+        layout.setSpacing(0)
         layout.setContentsMargins(0, 0, 0, 0)
         
         self.setLayout(layout)
