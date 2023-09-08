@@ -4,12 +4,11 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 
-class HistoryPage(QWidget):
+class SettingsSection(QWidget):
     def __init__(self, *argv):
         super().__init__(*argv)
         
-        label = QLabel("History Page")
-        
+        label = QLabel("Setting Page")
         layout = QVBoxLayout()
         layout.addWidget(label)
         self.setLayout(layout)

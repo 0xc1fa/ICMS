@@ -4,7 +4,7 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 
-class HomePage(QWidget):
+class HomeSection(QWidget):
     def __init__(self, *argv):
         super().__init__(*argv)
         
