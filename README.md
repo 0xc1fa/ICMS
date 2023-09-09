@@ -1,7 +1,7 @@
 # ICMS
-This repo present an Intelligent Course Management System (ICMS) with a facial login component, which contains the following functions:
+**_You can change the page shown by going to App.py and change `self.pages.setCurrentIndex(1)`, 0 is login page, 1 is after login_**
 
-**You can change the page shown by going to App.py and change `self.pages.setCurrentIndex(1)`, 0 is login page, 1 is after login**
+This repo present an Intelligent Course Management System (ICMS) with a facial login component, which contains the following functions:
 
 - When a student login with his/her face, his/her information such as name, login time, and welcome message will be presented in the graphics user interface (GUI).
 - If the student has class within one hour, the corresponding course information, classroom address, teacher’s message, links of Zoom, tutorial/lecture notes, other course materials and so on and so forth will be presented in the GUI. The student could click the links to redirect to Zoom or other materials. The GUI should also allow the student to send the above information to his/her email address by email.
