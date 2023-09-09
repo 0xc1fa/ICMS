@@ -34,7 +34,7 @@ class App(QMainWindow):
         self.main_page = MainPage()
         self.pages.addWidget(self.login_page)
         self.pages.addWidget(self.main_page)
-        self.pages.setCurrentIndex(1)  # set login page as default page
+        self.pages.setCurrentIndex(0)  # set login page as default page
         layout.addWidget(self.pages)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
