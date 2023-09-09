@@ -8,6 +8,9 @@ pyside6 = "*"
 qtawesome = "*"
 opencv-python = "*"
 numpy = "*"
+pymysql = "*"
+mysql-connector-python = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

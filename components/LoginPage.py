@@ -288,7 +288,7 @@ class LoginSection(QWidget):
         self.setFixedHeight(500)
         layout = QHBoxLayout()
         login_section_left = LoginSectionLeft()
-        login_section_right = LoginSectionRight("src/assets/retro-vaporwave-cropped.png")
+        login_section_right = LoginSectionRight("public/images/retro-vaporwave-cropped.png")
         layout.addWidget(login_section_left)
         layout.addWidget(login_section_right)
         layout.setContentsMargins(0, 0, 0, 0)

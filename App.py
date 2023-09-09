@@ -1,5 +1,11 @@
 # This Python file uses the following encoding: utf-8
 import sys
+import os
+
+from dotenv import load_dotenv
+
+from providers.DatabaseProvider import DatabaseProvider
+from providers.UserProvider import UserProvider
 from components.Sidebar import Sidebar
 from PySide6.QtWidgets import (
     QApplication,
@@ -39,6 +45,12 @@ class App(QMainWindow):
 
 
 if __name__ == "__main__":
+    load_dotenv()
+    DB_HOST = os.getenv('DB_HOST')
+    DB_USER = os.getenv('DB_USER')
+    DB_PASSWORD = os.getenv('DB_PASSWORD')
+    DB_NAME = os.getenv('DB_NAME')
+    
     app = QApplication(sys.argv)
     window = App()
     window.show()
