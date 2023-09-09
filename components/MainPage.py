@@ -3,7 +3,7 @@
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QWidget,
-    QStackedWidget
+    QStackedWidget,
 )
 from PySide6.QtGui import QPalette, QColor
 
