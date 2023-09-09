@@ -4,7 +4,7 @@ import os
 
 from dotenv import load_dotenv
 
-from providers.DatabaseProvider import DatabaseProvider
+import providers.DatabaseProvider
 from providers.UserProvider import UserProvider
 from components.Sidebar import Sidebar
 from PySide6.QtWidgets import (
