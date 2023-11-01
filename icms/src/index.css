@@ -44,6 +44,10 @@ h2 {
   margin: 0.5rem 0;
 }
 
+h3, h4, h5, h6 {
+  color: #777777;
+}
+
 p {
   margin: 0.25rem 0;
 }
@@ -59,4 +63,14 @@ p {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }

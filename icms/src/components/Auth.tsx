@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 import { BsBodyText } from 'solid-icons/bs'
 import { setAuthStore } from "../store/authStore";
@@ -6,7 +6,10 @@ import { useNavigate } from "@solidjs/router";
 
 const Auth: Component = () => {
 
+  let videoRef: HTMLVideoElement | undefined;
+  let stream: MediaStream | undefined;
   const navigate = useNavigate();
+  const [useFaceAuth, setUseFaceAuth] = createSignal(false);
 
   const handleSubmit = () => {
     setAuthStore('user', {
@@ -18,27 +21,75 @@ const Auth: Component = () => {
     navigate('/home')
   }
 
-  return (
-    <Container>
-      <HeaderField>
-        <HeadingField><Icon/><h2>Oasis ICMS</h2></HeadingField>
-      </HeaderField>
+  const activateFaceAuth = async () => {
+    const accessCamera = async () => {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+        if (videoRef)
+          videoRef.srcObject = stream;
+      }
+    }
+
+    try {
+      accessCamera();
+    } catch (err) {
+      console.error("Error accessing the camera: ", err);
+    }
+  }
+
+  const stopMediaStream = () => {
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+    }
+  };
+
+  const handleFaceAuth = async () => {
+    setUseFaceAuth(!useFaceAuth())
+    if (useFaceAuth()) {
+      activateFaceAuth()
+    } else {
+      stopMediaStream()
+    }
+  }
+
+  const PasswordAuth = () => (
+    <>
       <InputField>
-        <Label for="username">Username</Label>
+        <Label>Username</Label>
         <Input type="text" id="username" />
       </InputField>
       <InputField>
-        <Label for="password">Password</Label>
+        <Label>Password</Label>
         <Input type="text" id="password" />
       </InputField>
       <ButtonField>
         <Button onClick={handleSubmit}>Log in</Button>
-        <HLink href="/auth/register">Forgot your password?</HLink>
-        <HLink href="/auth/register">Register</HLink>
+      </ButtonField>
+    </>
+  )
+
+  const FaceAuth = styled('video')`
+    background-color: #d0e1e9;
+    border-radius: 0.3rem;
+    margin: 1rem;
+    box-sizing: border-box;
+    height: fit-content;
+  `
+
+  return (
+    <Container>
+      <HeaderField>
+        <HeadingField><Icon/><h2>HKU ICMS</h2></HeadingField>
+      </HeaderField>
+      {useFaceAuth() ? <FaceAuth ref={videoRef} autoplay playsinline/> : <PasswordAuth/>}
+      <ButtonField>
+        <HLink onClick={handleFaceAuth}>{useFaceAuth() ? "Use password" : "Use face auth"}</HLink>
       </ButtonField>
     </Container>
   )
 }
+
 
 const Container = styled('div')`
   display: flex;
@@ -99,7 +150,7 @@ const HeadingField = styled('div')`
 `
 
 const Icon = styled(BsBodyText)`
-  background-color: rgba(69,160,140,255);
+  background-color: #45a08b;
   color: white;
   border-radius: 50%;
   padding: 0.375rem;
@@ -121,6 +172,10 @@ const Input = styled('input')`
   font-size: small;
   color: #222222;
   padding: 0 0.7rem;
+
+  &:hover {
+    border-color: #45a08b;
+  }
 `
 
 const Button = styled('button')`
@@ -131,7 +186,7 @@ const Button = styled('button')`
   border: 1px solid #d0e1e9;
   font-size: small;
   color: white;
-  background-color: rgba(69,160,140,255);
+  background-color: #45a08b;
   padding: 0 0.7rem;
   cursor: pointer;
   transition: background-color 0.3s, color 0.1s;

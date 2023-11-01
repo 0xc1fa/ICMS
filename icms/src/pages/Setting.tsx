@@ -1,21 +1,16 @@
-import { Component } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Component, For } from "solid-js";
+import NormalFlow from "../components/NormalFlowPage";
+import { Skeleton } from "@suid/material"
 
 const Setting: Component = () => {
   return (
-    <Page>
-      <h1>Settting</h1>
-      <p>This is the setting page</p>
-    </Page>
+    <NormalFlow>
+      <h3>Setting</h3>
+      <For each={[1,2,3,4,5,6,7,8,9,10]}>
+        {() => <Skeleton width={700} style={{ "padding": "8px" }} />}
+      </For>
+    </NormalFlow>
   )
 }
-
-const Page = styled('div')`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 50vh; */
-`
 
 export default Setting;

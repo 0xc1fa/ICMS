@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'solid-js'
-import { Route, Routes, Navigate } from '@solidjs/router'
+import { Route, Routes } from '@solidjs/router'
 import Login from './pages/Login'
 import Sidebar from './components/Sidebar'
 import NotFound from './pages/NotFound'
@@ -7,7 +7,7 @@ import Protected from './components/Protected'
 import LoadingAnimation from './components/LoadingAnimation'
 
 const Home = lazy(() => import('./pages/Home'));
-const Timetable = lazy(() => import('./pages/Timetable'));
+const History = lazy(() => import('./pages/History'));
 const Setting = lazy(() => import('./pages/Setting'));
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
           <Route path="/*" element={<Protected><Sidebar/></Protected>}>
             <Route path="/" component={Home} />
             <Route path="/home" component={Home} />
-            <Route path="/timetable" component={Timetable} />
+            <Route path="/history" component={History} />
             <Route path="/setting" component={Setting} />
           </Route>
           <Route path="/*" component={NotFound} />

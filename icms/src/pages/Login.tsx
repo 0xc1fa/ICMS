@@ -5,8 +5,6 @@ import Auth from "../components/Auth";
 const Login: Component = () => {
   return (
     <Page>
-      {/* <h1>ICMS: Login</h1>
-      <p>ICMS is a CMS for the 21st century</p> */}
       <Auth/>
     </Page>
   )

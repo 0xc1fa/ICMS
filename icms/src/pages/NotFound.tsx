@@ -4,7 +4,7 @@ import { styled } from "solid-styled-components";
 const NotFound: Component = () => (
   <Page>
     <h1>404 Error: Page not found</h1>
-    <p>The page you navigate to does not exist</p>
+    <p>The page you try to navigate to does not exist</p>
   </Page>
 )
 
