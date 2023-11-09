@@ -25,8 +25,9 @@ const Auth: Component = () => {
     const accessCamera = async () => {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-        if (videoRef)
+        if (videoRef) {
           videoRef.srcObject = stream;
+        }
       }
     }
 

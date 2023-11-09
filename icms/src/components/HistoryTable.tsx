@@ -10,29 +10,9 @@ import {
 import { Component } from "solid-js"
 import { For } from "solid-js"
 import { styled } from "solid-styled-components";
+import rows from "../dummydata/loginHistory";
 
 const HistoryTable: Component<{ userId?: string }> = () => {
-
-  const rows = [
-    {
-      id: 1,
-      loginDate: '1st Nov 2021',
-      loginTime: '18:00',
-      loginDuration: '10m',
-    },
-    {
-      id: 2,
-      loginDate: '1st Nov 2021',
-      loginTime: '15:00',
-      loginDuration: '1h 30m',
-    },
-    {
-      id: 3,
-      loginDate: '31st Oct 2021',
-      loginTime: '23:00',
-      loginDuration: '59m',
-    }
-  ];
 
   const HistoryTableHead = () => (
     <TableHead>
@@ -69,6 +49,7 @@ const HistoryTable: Component<{ userId?: string }> = () => {
       </Table>
     </TableContainer>
   )
+  
 }
 
 const StyledTableRow = styled(TableRow)`

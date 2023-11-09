@@ -5,10 +5,13 @@ import Sidebar from './components/Sidebar'
 import NotFound from './pages/NotFound'
 import Protected from './components/Protected'
 import LoadingAnimation from './components/LoadingAnimation'
+import Home from './pages/Home'
+import History from './pages/History'
+import Setting from './pages/Setting'
 
-const Home = lazy(() => import('./pages/Home'));
-const History = lazy(() => import('./pages/History'));
-const Setting = lazy(() => import('./pages/Setting'));
+// const Home = lazy(() => import('./pages/Home'));
+// const History = lazy(() => import('./pages/History'));
+// const Setting = lazy(() => import('./pages/Setting'));
 
 function App() {
 
