@@ -1,39 +1,21 @@
-import os
-from pathlib import Path
-import shutil
 import logging
-from typing import Optional, List
-from uuid import UUID
-import uuid
-from datetime import datetime
-
-from fastapi import FastAPI, UploadFile, HTTPException, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from pydantic import BaseModel
-import aiomysql
 import uvicorn
-
-# from sqlalchemy import create_engine
-# from sqlalchemy.ext.declarative import declarative_base
-# from sqlalchemy.orm import sessionmaker
-# from sqlalchemy.orm import Session
-
 import mysql.connector
 
 load_dotenv(".env.local")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-# models.Base.metadata.create_all(bind=engine)
 
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
-
+cnx = mysql.connector.connect(
+    user='root',
+    password='t8gESx06a5e',
+    host='127.0.0.1',
+    port=3306,
+    database='comp3278')
 
 app = FastAPI(debug=True)
 app.add_middleware(
@@ -44,23 +26,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
-def test_connection():
+def test_fastapi_connection():
     return {"status": "ok"}
 
 
-# @app.get("/users/", response_model=List[schemas.User])
-# def read_users(skip: int = 0, limit: int = 100):
-#     cursor = cnx.cursor()
-#     cursor.execute("SELECT * FROM users;")
-#     rows = [row for row in cursor]
-#     cursor.close()
-#     return {"users": rows}
+@app.get("/db")
+def test_db_connection():
+    cursor = cnx.cursor()
+    cursor.execute("SELECT * FROM Class;")
+    rows = [{
+        'course_id': row[0],
+        'class_id': row[1],
+        'class_time': row[2],
+        'class_location': row[3],
+    } for row in cursor]
+    cursor.close()
+    return {"status": "ok", "rows": rows}
+
+
+@app.get("/student/get/{id}")
+def get_student_by_id(id):
+    cursor = cnx.cursor()
+    cursor.execute(f"SELECT * FROM Student WHERE student_id = {id};")
+    rows = [{
+        'student_id': row[0],
+        'student_name': row[1],
+        'email': row[2],
+        'password': row[3],
+    } for row in cursor]
+    cursor.close()
+    return {"status": "ok", "rows": rows}
 
 
 if __name__ == "__main__":
-    cnx = mysql.connector.connect(user='admin', password='comp3278database',
-                                  host='127.0.0.1',
-                                  port=3306,
-                                  database='comp3278')
     uvicorn.run("main:app", host="127.0.0.1", port=8000)

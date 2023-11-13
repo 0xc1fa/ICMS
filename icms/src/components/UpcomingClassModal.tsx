@@ -2,10 +2,14 @@ import { Modal } from "@suid/material"
 import { Component, Setter } from "solid-js"
 import { styled } from "solid-styled-components"
 import { UpcomingClassItem } from "../dummydata/upcomingClass"
+import { CourseMaterial } from "../dummydata/courseMaterial"
 import { BiRegularX } from 'solid-icons/bi'
+import { css } from "solid-styled-components";
+
 
 const UpcomingClassModal: Component<{
   upcomingClass: UpcomingClassItem,
+  couseMaterial: CourseMaterial[]
   open: boolean,
   setOpen: Setter<boolean>
 }> = (props) => {
@@ -14,10 +18,20 @@ const UpcomingClassModal: Component<{
       <Container>
         <Header>
           <hgroup>
-            <b>{props.upcomingClass.courseCode}</b>
+            <div>
+              <b>{props.upcomingClass.courseCode}</b>
+              &nbsp-&nbsp
+              {props.upcomingClass.courseTime}
+              &nbsp@&nbsp
+              {props.upcomingClass.classroomAddress}
+              &nbsp/&nbsp
+              <a href={props.upcomingClass.zoomLink}
+                class={css`&:visited {color: white}`}>Zoom</a>
+            </div>
             <h2>{props.upcomingClass.courseName}</h2>
           </hgroup>
         </Header>
+
         <Cross onClick={() => props.setOpen(false)}/>
       </Container>
     </ModalLayout>

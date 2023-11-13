@@ -1,6 +1,6 @@
 import { createStore } from "solid-js/store";
 
-type User = {
+export type User = {
   username: string;
   userId: string;
   email: string;

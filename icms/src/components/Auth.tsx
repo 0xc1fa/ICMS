@@ -3,6 +3,8 @@ import { styled } from "solid-styled-components";
 import { BsBodyText } from 'solid-icons/bs'
 import { setAuthStore } from "../store/authStore";
 import { useNavigate } from "@solidjs/router";
+import { User } from "../store/authStore";
+import axios from "axios";
 
 const Auth: Component = () => {
 
@@ -19,6 +21,10 @@ const Auth: Component = () => {
       token: "test",
     })
     navigate('/home')
+  }
+
+  const setUser = (params: User) => {
+    setAuthStore('user', params)
   }
 
   const activateFaceAuth = async () => {
@@ -52,6 +58,25 @@ const Auth: Component = () => {
     } else {
       stopMediaStream()
     }
+  }
+
+  const recognizeFace = () => {
+    if (videoRef) {
+      axios.post('http://localhost:8080/face_recognition', {
+
+      })
+      .then((res) => (res.data))
+      .then((data) => {
+        if (data !== "None") {
+          setUser(data)
+          navigate('/home')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+    setTimeout(recognizeFace, 50)
   }
 
   const PasswordAuth = () => (
