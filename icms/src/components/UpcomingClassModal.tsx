@@ -3,6 +3,8 @@ import { Component, Setter } from "solid-js"
 import { styled } from "solid-styled-components"
 import { UpcomingClassItem } from "../dummydata/upcomingClass"
 import { BiRegularX } from 'solid-icons/bi'
+import { css } from "solid-styled-components";
+
 
 const UpcomingClassModal: Component<{
   upcomingClass: UpcomingClassItem,
@@ -15,8 +17,14 @@ const UpcomingClassModal: Component<{
         <Header>
           <hgroup>
             <div>
-              <b>{props.upcomingClass.courseCode}</b>&nbsp@&nbsp
-              <u>{props.upcomingClass.courseTime}</u>
+              <b>{props.upcomingClass.courseCode}</b>
+              &nbsp-&nbsp
+              {props.upcomingClass.courseTime}
+              &nbsp@&nbsp
+              {props.upcomingClass.classroomAddress}
+              &nbsp/&nbsp
+              <a href={props.upcomingClass.zoomLink}
+                class={css`&:visited {color: white}`}>Zoom</a>
             </div>
             <h2>{props.upcomingClass.courseName}</h2>
           </hgroup>
