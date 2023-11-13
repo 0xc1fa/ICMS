@@ -36,11 +36,29 @@ def test_fastapi_connection():
 def test_db_connection():
     cursor = cnx.cursor()
     cursor.execute("SELECT * FROM Class;")
-    rows = [row for row in cursor]
+    rows = [{
+        'course_id': row[0],
+        'class_id': row[1],
+        'class_time': row[2],
+        'class_location': row[3],
+    } for row in cursor]
+    cursor.close()
+    return {"status": "ok", "rows": rows}
+
+
+@app.get("/student/get/{id}")
+def get_student_by_id(id):
+    cursor = cnx.cursor()
+    cursor.execute(f"SELECT * FROM Student WHERE student_id = {id};")
+    rows = [{
+        'student_id': row[0],
+        'student_name': row[1],
+        'email': row[2],
+        'password': row[3],
+    } for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
 
 
 if __name__ == "__main__":
-
     uvicorn.run("main:app", host="127.0.0.1", port=8000)
