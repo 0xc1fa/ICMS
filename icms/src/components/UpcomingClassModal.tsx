@@ -14,10 +14,14 @@ const UpcomingClassModal: Component<{
       <Container>
         <Header>
           <hgroup>
-            <b>{props.upcomingClass.courseCode}</b>
+            <div>
+              <b>{props.upcomingClass.courseCode}</b>&nbsp@&nbsp
+              <u>{props.upcomingClass.courseTime}</u>
+            </div>
             <h2>{props.upcomingClass.courseName}</h2>
           </hgroup>
         </Header>
+
         <Cross onClick={() => props.setOpen(false)}/>
       </Container>
     </ModalLayout>
