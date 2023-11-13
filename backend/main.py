@@ -15,7 +15,8 @@ cnx = mysql.connector.connect(
     password='t8gESx06a5e',
     host='127.0.0.1',
     port=3306,
-    database='comp3278')
+    database='comp3278'
+)
 
 app = FastAPI(debug=True)
 app.add_middleware(
@@ -36,12 +37,16 @@ def test_fastapi_connection():
 def test_db_connection():
     cursor = cnx.cursor()
     cursor.execute("SELECT * FROM Class;")
-    rows = [{
-        'course_id': row[0],
-        'class_id': row[1],
-        'class_time': row[2],
-        'class_location': row[3],
-    } for row in cursor]
+    # using list comprehension
+    # rows = [{
+    #     'course_id': row[0],
+    #     'class_id': row[1],
+    #     'class_time': row[2],
+    #     'class_location': row[3],
+    # } for row in cursor]
+
+    # using zip and cursor.column_names
+    rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
 
@@ -50,12 +55,7 @@ def test_db_connection():
 def get_student_by_id(id):
     cursor = cnx.cursor()
     cursor.execute(f"SELECT * FROM Student WHERE student_id = {id};")
-    rows = [{
-        'student_id': row[0],
-        'student_name': row[1],
-        'email': row[2],
-        'password': row[3],
-    } for row in cursor]
+    rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
 
