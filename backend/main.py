@@ -75,7 +75,7 @@ def post_login_history(id,session_id,login_time,login_duration):
     cursor.close()
     return {"status": "ok", "rows": rows}
 
-@app.get("/login-history/put/{session_id}/{new_login_duration}")
+@app.get("/login-history/put/{session_id}")
 def put_login_history(session_id,new_login_duration):
     cursor = cnx.cursor()
     cursor.execute(f"UPDATE `LoginHistory` SET `login_duration`={new_login_duration} WHERE session_id = {session_id};")
