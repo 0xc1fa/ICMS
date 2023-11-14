@@ -126,7 +126,7 @@ def get_materials_by_course_id(course_id):
     '''
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
-    return {f"Materials from {course_id}": rows}
+    return {"Materials": rows}
 
 
 
