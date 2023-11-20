@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import uvicorn
 import datetime
 import mysql.connector
+import check_face
 
 load_dotenv(".env.local")
 
@@ -143,8 +144,11 @@ def upcoming_class_get(id):
 
 @app.post("/face-recognition/post")
 def face_to_id():
-    
-    return None
+    result = check_face()
+    if not result:
+        return {"student_id": "none"}
+    else:
+        return {"student_id": result}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000)
