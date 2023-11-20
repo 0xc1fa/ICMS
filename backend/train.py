@@ -12,8 +12,12 @@ face_cascade = cv2.CascadeClassifier('haarcascade/haarcascade_frontalface_defaul
 # Create OpenCV LBPH recognizer for training
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
+student_id = int(input("What is your student_id? "))
+
+
 current_id = 0
 label_ids = {}
+arb_id_to_student_id = {}
 y_label = []
 x_train = []
 
@@ -29,7 +33,10 @@ for root, dirs, files in os.walk(image_dir):
                 pass
             else:
                 label_ids[label] = current_id
+                arb_id_to_student_id[current_id] = student_id
                 current_id += 1
+
+
             id_ = label_ids[label]
             print(label_ids)
 
@@ -48,7 +55,7 @@ for root, dirs, files in os.walk(image_dir):
 # {name: id}  
 # id starts from 0
 with open("labels.pickle", "wb") as f:
-    pickle.dump(label_ids, f)
+    pickle.dump({'l': label_ids, 'm': arb_id_to_student_id}, f)
 
 # Train the recognizer and save the trained model.
 recognizer.train(x_train, np.array(y_label))

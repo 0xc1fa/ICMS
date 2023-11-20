@@ -1,11 +1,7 @@
-import urllib
 import numpy as np
-import mysql.connector
 import cv2
 import pyttsx3
 import pickle
-from datetime import datetime
-import sys
 import time
 
 def check_face():
@@ -26,8 +22,12 @@ def check_face():
 
     # labels = {"person_name": 3035950000} (student_id)
     with open("labels.pickle", "rb") as f:
-        labels = pickle.load(f)
-        labels = {v: k for k, v in labels.items()}
+        pick = pickle.load(f)
+        #name to class label (pick['l'])
+        #label to student_id (pick['m'])
+
+        labels = {v: k for k, v in pick['l'].items()} 
+        arb_id_to_student_id = {k: v for k, v in pick['m'].items()} 
 
     
     while True:
@@ -39,22 +39,25 @@ def check_face():
             print(x, w, y, h)
             roi_gray = gray[y:y + h, x:x + w]
             roi_color = frame[y:y + h, x:x + w]
+
             # predict the id and confidence for faces
             id_, conf = recognizer.predict(roi_gray)
+            #print(id_)
 
             if conf >= 30:
                 font = cv2.QT_FONT_NORMAL
-                id = 0
-                id += 1
+
                 name = labels[id_]
-                current_name = name
+                
+                student_id = arb_id_to_student_id[id_]
+
                 color = (255, 0, 0)
                 stroke = 2
                 cv2.putText(frame, name, (x, y), font, 1, color, stroke, cv2.LINE_AA)
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), (2))
 
                 time.sleep(1)
-                retturn.append(id_)
+                retturn.append(student_id)
             
             else:
                 color = (255, 0, 0)
@@ -81,3 +84,6 @@ def check_face():
 
 
 
+if __name__ == '__main__':
+    l = check_face()
+    print(l)
