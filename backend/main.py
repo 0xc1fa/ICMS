@@ -130,7 +130,6 @@ def get_materials_by_course_id(course_id):
     cursor.close()
     return {"Materials": rows}
 
-
 @app.get(f"/upcoming-class/get/{id}")
 def upcoming_class_get(id):
     cursor = cnx.cursor()
