@@ -143,7 +143,7 @@ def upcoming_class_get(id):
 
 @app.post("/face-recognition/post")
 def face_to_id():
-    result = check_face()
+    result = check_face.check_face()
     if not result:
         return {"student_id": "none"}
     else:

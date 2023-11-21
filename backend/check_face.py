@@ -70,7 +70,7 @@ def check_face():
                 engine.say(hello)
 
 
-        cv2.imshow('Attendance System', frame)
+        #cv2.imshow('Attendance System', frame)
         k = cv2.waitKey(20) & 0xff
         if k == ord('q'):
             break
