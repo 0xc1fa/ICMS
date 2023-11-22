@@ -34,16 +34,39 @@ const Auth: Component = () => {
     navigate('/home')
   }
 
-  // const setUser = (params: User) => {
-  //   setAuthStore('user', params)
-  // }
-
   const activateFaceAuth = async () => {
     const accessCamera = async () => {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
         if (videoRef) {
           videoRef.srcObject = stream;
+          axios.get('http://localhost:8000/face-recognition/post')
+            .then((res) => (res.data.student_id))
+            .then((student_id) => {
+              setAuthStore('studentId', student_id)
+              console.log(student_id)
+              axios.get(`http://localhost:8000/student/get/${student_id}`)
+              .then((res) => (res.data.rows))
+              .then(row => {
+                console.log(row)
+                setAuthStore('name', row.student_name)
+                setAuthStore('email', row.email)
+                setAuthStore('sessionId', uuid4())
+                axios.post(
+                  `http://localhost:8000/add-login-session/`, {},
+                  {
+                    params: {
+                      student_id: authStore.studentId,
+                      session_id: authStore.sessionId,
+                    }
+                  }
+                )
+                navigate('/home')
+              })
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         }
       }
     }
@@ -69,25 +92,6 @@ const Auth: Component = () => {
     } else {
       stopMediaStream()
     }
-  }
-
-  const recognizeFace = () => {
-    if (videoRef) {
-      axios.post('http://localhost:8080/face_recognition', {
-
-      })
-      .then((res) => (res.data))
-      .then((data) => {
-        if (data !== "None") {
-          // setUser(data)
-          navigate('/home')
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
-    setTimeout(recognizeFace, 50)
   }
 
   const PasswordAuth = () => (

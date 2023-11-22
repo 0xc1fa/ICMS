@@ -21,19 +21,11 @@ function App() {
 
   const fetchData = async () => {
     if (authStore.sessionId === null) return;
-    const response = await axios.put('http://localhost:8000/update-login-session/', {}, {
+    await axios.put('http://localhost:8000/update-login-session/', {}, {
       params: {
         session_id: authStore.sessionId
       }
     })
-    console.log(response);
-    // try {
-    //   const response = await fetch(`http://localhost:8000/update-login-session/`);
-    //   const data = await response.json();
-    //   console.log(data);
-    // } catch (error) {
-    //   console.error('Error fetching data:', error);
-    // }
   };
 
   onCleanup(() => {

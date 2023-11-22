@@ -33,6 +33,7 @@ CREATE TABLE `Class` (
   `classroom_id` INT NOT NULL,
   `teacher_message` VARCHAR(255),
   `zoom_link` VARCHAR(1023),
+  `duration_hour` INT NOT NULL,
   PRIMARY KEY (`class_id`, `course_id`),
   FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`) ON DELETE CASCADE,
   FOREIGN KEY (`classroom_id`) REFERENCES `Classroom`(`classroom_id`) ON DELETE CASCADE

@@ -56,7 +56,7 @@ def test_db_connection():
 
 
 @app.get("/student/get/{id}")
-def get_student_by_id(id):
+def get_student_by_id(id: str):
     cursor = cnx.cursor()
     cursor.execute(f"SELECT * FROM Student WHERE student_id = {id};")
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
@@ -103,7 +103,6 @@ def get_teacher_message_by_course_id(course_id):
     return {"Teacher_Messages": rows}
 
 
-
 @app.get("/course/get/{student_id}")
 def get_courses_enrolled_by_student_id(student_id):
     cursor = cnx.cursor()
@@ -133,6 +132,7 @@ def get_materials_by_course_id(course_id):
     cursor.close()
     return {"status": "okay", "rows": rows}
 
+
 @app.get("/upcoming-class/get/{id}")
 def upcoming_class_get(id: str):
     cursor = cnx.cursor()
@@ -160,6 +160,7 @@ def upcoming_class_get(id: str):
     cursor.close()
     return {"status": "okay", "rows": rows}
 
+
 @app.get("/login-history/{id}")
 def get_login_history(id: str):
     cursor = cnx.cursor()
@@ -167,6 +168,7 @@ def get_login_history(id: str):
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
+
 
 @app.put("/update-login-session/")
 def update_login_session(session_id: str):
@@ -195,13 +197,39 @@ def add_login_session(session_id: str, student_id: str):
     cnx.commit()
     return {"status": "ok", "rows": rows}
 
-@app.post("/face-recognition/post")
+
+@app.get("/face-recognition/post")
 def face_to_id():
     result = check_face.check_face()
     if not result:
         return {"student_id": "none"}
     else:
         return {"student_id": result}
+
+
+@app.get("/week-class/")
+def get_week_class(student_id: str):
+    cursor = cnx.cursor()
+    command = f"""
+        SELECT
+            Class.course_id,
+            Class.class_time,
+            Classroom.classroom_address,
+            Class.teacher_message,
+            Class.duration_hour
+        FROM Student
+            LEFT JOIN Enrollment ON (Student.student_id = Enrollment.student_id)
+            LEFT JOIN Class ON (Enrollment.course_id = Class.course_id)
+            LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
+        WHERE Class.class_time BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY)
+  AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 7 DAY)
+            AND Student.student_id = '{student_id}'
+    """
+    cursor.execute(command)
+    rows = [dict(zip(cursor.column_names, row)) for row in cursor]
+    cursor.close()
+    return {"status": "ok", "rows": rows}
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000)

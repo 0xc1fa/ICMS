@@ -12,6 +12,7 @@ import axios from "axios";
 import { authStore } from "../store/authStore";
 import { CourseMaterial } from "../@types/CourseMaterial";
 import { YYYYMMDD, hhmm } from "../helpers/formatDate"
+import { WeekView } from "../components/Timetable";
 
 
 const Home: Component = () => {
@@ -24,6 +25,7 @@ const Home: Component = () => {
   const [courseModalOpened, setCourseModalOpened] = createSignal(false);
   const [allCourseInfo, setAllCourseInfo] = createSignal<CourseInfo[]>([]);
 
+
   onMount(async () => {
     const upcomingClassResult = (await axios.get(`http://localhost:8000/upcoming-class/get/${authStore.studentId}`)).data.rows
     const upcomingClassMapping = upcomingClassResult.map((row: any) => ({
@@ -34,7 +36,7 @@ const Home: Component = () => {
       teacherMessage: row.teacher_message,
       zoomLink: row.zoom_link,
     }))
-    setUpcomingClass(Array.isArray(upcomingClass) ? upcomingClassMapping[0] : null)
+    setUpcomingClass(upcomingClassMapping.length > 0 ? upcomingClassMapping[0] : null);
 
     if (upcomingClass() !== null) {
       const upcomingClassMaterialResult = (await axios.get(`http://localhost:8000/material/get/${upcomingClass()!.courseCode}`)).data.rows
@@ -47,7 +49,6 @@ const Home: Component = () => {
     }
 
     const allCourseInfo = (await axios.get(`http://localhost:8000/course/get/${authStore.studentId}`)).data.rows
-    console.log(allCourseInfo)
     let allCourseInfoWithMaterial: CourseInfo[] = []
     for (const course of allCourseInfo) {
       const courseMaterial = (await axios.get(`http://localhost:8000/material/get/${course.course_id}`)).data.rows
@@ -58,26 +59,13 @@ const Home: Component = () => {
       })
     }
     setAllCourseInfo(allCourseInfoWithMaterial)
-
   })
 
-  const UpcomingClassCardOrNull = () => (
-    upcomingClass() === null ?
-    <b>No upcoming class</b> :
-    <>
-      <UpcomingClassCard upcomingClass={upcomingClass()!} onClick={() => setUpcomingClassModalOpened(true)} />
-      <UpcomingClassModal upcomingClass={upcomingClass()!} couseMaterial={upcomingClassMaterial()!} open={upcomingClassModalOpened()} setOpen={setUpcomingClassModalOpened} />
-    </>
-  )
 
   return (
     <NormalFlow>
       <h3>Welcome back, {authStore.name}</h3>
       <p>Last login at: {loginTime()}</p>
-      <Section>
-        <h3>Upcoming Class</h3>
-        <UpcomingClassCardOrNull/>
-      </Section>
       <Section>
         <h3>All Courses</h3>
         <Carousel>
@@ -92,16 +80,25 @@ const Home: Component = () => {
         </Carousel>
         <CourseModal course={modalCourse()} open={courseModalOpened()} setOpen={setCourseModalOpened} />
       </Section>
+      <Section>
+        <h3>Upcoming Class</h3>
+        {
+          upcomingClass() === null ?
+          <WeekView/> :
+          <>
+            <UpcomingClassCard upcomingClass={upcomingClass()!} onClick={() => setUpcomingClassModalOpened(true)} />
+            <UpcomingClassModal upcomingClass={upcomingClass()!} couseMaterial={upcomingClassMaterial()!} open={upcomingClassModalOpened()} setOpen={setUpcomingClassModalOpened} />
+          </>
+        }
+      </Section>
+      <Section>
+        <h3>Timetable</h3>
+        <WeekView/>
+      </Section>
     </NormalFlow>
   )
-
 }
 
-type TimeSlot = {
-  courseCode: string,
-  time: number,
-  duration: number,
-}
 
 const Section = styled('div')`
   gap: 4px;
