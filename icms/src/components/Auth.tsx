@@ -19,15 +19,18 @@ const Auth: Component = () => {
     setAuthStore('studentId', '3035690001')
     setAuthStore('email', 'chanyatfu0616@gmail.com')
     setAuthStore('sessionId', uuid4())
-    // await axios.post(
-    //   `http://localhost:8000/add-login-session/`, {},
-    //   {
-    //     params: {
-    //       student_id: authStore.studentId,
-    //       session_id: authStore.sessionId,
-    //     }
-    //   }
-    // )
+    const loginSessionAdd = await axios.post(
+      `http://localhost:8000/add-login-session/`, {},
+      {
+        params: {
+          student_id: authStore.studentId,
+          session_id: authStore.sessionId,
+        }
+      }
+    )
+    console.log(authStore.studentId)
+    console.log(authStore.sessionId)
+    console.log(loginSessionAdd)
     navigate('/home')
   }
 

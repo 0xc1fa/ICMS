@@ -53,7 +53,7 @@ CREATE TABLE `TeacherMessage` (
 DROP TABLE IF EXISTS `LoginHistory`;
 CREATE TABLE `LoginHistory` (
   `student_id` VARCHAR(10) NOT NULL,
-  `session_id` int NOT NULL,
+  `session_id` VARCHAR(36) NOT NULL,
   `login_time` DATETIME NOT NULL,
   `login_duration` int NOT NULL,
   PRIMARY KEY (`session_id`, `student_id`),

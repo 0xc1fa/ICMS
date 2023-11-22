@@ -15,13 +15,10 @@ import { YYYYMMDD, hhmm } from "../helpers/formatDate"
 
 
 const Home: Component = () => {
-
-  // const options: Intl.DateTimeFormatOptions = { year: "numeric", month: 'long', day: 'numeric' };
   const [currentTime, setCurrentTime] = createSignal(new Date(Date.now()));
   const [upcomingClass, setUpcomingClass] = createSignal<UpcomingClassItem | null>(null)
   const [upcomingClassMaterial, setUpcomingClassMaterial] = createSignal<CourseMaterial[] | null>(null)
   const [modalCourse, setModalCourse] = createSignal(dummyCourseInfo[0])
-  // const dateTimeFormat = new Intl.DateTimeFormat('en-US', options);
   const [loginTime, setLoginTime] = createSignal(`${YYYYMMDD(currentTime())} ${hhmm(currentTime())}`);
   const [upcomingClassModalOpened, setUpcomingClassModalOpened] = createSignal(false);
   const [courseModalOpened, setCourseModalOpened] = createSignal(false);

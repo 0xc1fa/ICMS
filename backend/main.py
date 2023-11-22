@@ -173,12 +173,13 @@ def update_login_session(session_id: str):
     cursor = cnx.cursor()
     command = f"""
         UPDATE `LoginHistory`
-        SET login_duration = NOW() - login_time
+        SET login_duration = TIMESTAMPDIFF(SECOND, login_time, NOW())
         WHERE session_id = '{session_id}';
     """
     cursor.execute(command)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
+    cnx.commit()
     return {"status": "ok", "rows": rows}
 
 
@@ -186,11 +187,12 @@ def update_login_session(session_id: str):
 def add_login_session(session_id: str, student_id: str):
     cursor = cnx.cursor()
     command = f"""
-        INSERT INTO `LoginHistory` VALUES ('{student_id}', '{session_id}', 'NOW()', '0');
+        INSERT INTO `LoginHistory` VALUES ('{student_id}', '{session_id}', NOW(), 0);
     """
     cursor.execute(command)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
+    cnx.commit()
     return {"status": "ok", "rows": rows}
 
 @app.post("/face-recognition/post")

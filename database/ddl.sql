@@ -24,9 +24,9 @@ INSERT INTO `Class` VALUES ('MATH3333', '2', '2018-23-28 15:30:00', '5', 'Almost
 INSERT INTO `TeacherMessage` VALUES ('1', 'COMP3111', 'Welcome to COMP3111', '2018-11-01 10:30:00');
 INSERT INTO `TeacherMessage` VALUES ('2', 'COMP3278', 'The project is due on 23rd Nov', '2018-11-02 10:30:00');
 
-INSERT INTO `LoginHistory` VALUES ('3035690001', '1', '2018-11-01 10:30:00', '100');
-INSERT INTO `LoginHistory` VALUES ('3035690001', '2', '2018-11-01 10:30:00', '100');
-INSERT INTO `LoginHistory` VALUES ('3035690001', '3', '2018-11-01 10:30:00', '523');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'ae48a13d-a68f-47eb-a225-188e56807327', '2018-11-01 10:30:00', '100');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'fb1cdf8a-971c-4ec5-87a1-3e48cdef309c', '2018-11-01 10:30:00', '100');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '94750f3f-3709-4705-8682-8c108fd618a7', '2018-11-01 10:30:00', '523');
 
 INSERT INTO `Material` VALUES ('1', 'COMP3278', 'Lecture 1', 'someurl_to_dropbox', '2018-11-01 10:30:00', 'PPT of lecture 1');
 INSERT INTO `Material` VALUES ('2', 'COMP3278', 'Lecture 2', 'someurl_to_dropbox', '2018-09-01 10:30:00', 'PPT of lecture 2');
