@@ -2,10 +2,9 @@ import { Modal } from "@suid/material"
 import { Component, Setter, For } from "solid-js"
 import { styled } from "solid-styled-components"
 import { UpcomingClassItem } from "../dummydata/upcomingClass"
-import { CourseMaterial } from "../dummydata/dummyCourseMaterial"
+import { CourseMaterial } from "../@types/CourseMaterial"
 import { BiRegularX } from 'solid-icons/bi'
 import { css } from "solid-styled-components";
-
 
 const UpcomingClassModal: Component<{
   upcomingClass: UpcomingClassItem,

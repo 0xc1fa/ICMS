@@ -7,14 +7,19 @@ import { dummyCourseMaterial } from "../dummydata/dummyCourseMaterial";
 import UpcomingClassModal from "../components/UpcomingClassModal";
 import { CourseInfo, dummyCourseInfo } from "../dummydata/dummyCourseInfo";
 import CourseCard from "../components/CourseCard";
+import CourseModal from "../components/CourseModal";
 
 const Home: Component = () => {
 
   const options: Intl.DateTimeFormatOptions = { year: "numeric", month: 'long', day: 'numeric' };
+
+  const [upcomingClass, setUpcomingClass] = createSignal(dummyUpcomingClass)
+  const [modalCourse, setModalCourse] = createSignal(dummyCourseInfo[0])
   const dateTimeFormat = new Intl.DateTimeFormat('en-US', options);
   const [username, setUsername] = createSignal('User');
   const [loginTime, setLoginTime] = createSignal(dateTimeFormat.format(Date.now()));
-  const [modalOpened, setModalOpened] = createSignal(false);
+  const [upcomingClassModalOpened, setUpcomingClassModalOpened] = createSignal(false);
+  const [courseModalOpened, setCourseModalOpened] = createSignal(false);
   const [timetable, setTimetable] = createSignal<TimeSlot[]>([
     {
       courseCode: 'COMP3278',
@@ -32,18 +37,22 @@ const Home: Component = () => {
       <p>Last login at: {loginTime()}</p>
       <Section>
         <h3>Upcoming Class</h3>
-        <UpcomingClassCard upcomingClass={dummyUpcomingClass} onClick={() => setModalOpened(true)}/>
-        <UpcomingClassModal upcomingClass={dummyUpcomingClass} couseMaterial={dummyCourseMaterial} open={modalOpened()} setOpen={setModalOpened} />
+        <UpcomingClassCard upcomingClass={upcomingClass()} onClick={() => setUpcomingClassModalOpened(true)}/>
+        <UpcomingClassModal upcomingClass={upcomingClass()} couseMaterial={dummyCourseMaterial} open={upcomingClassModalOpened()} setOpen={setUpcomingClassModalOpened} />
       </Section>
       <Section>
         <h3>All Courses</h3>
         <Carousel>
           <For each={dummyCourseInfo}>
             {(course) => (
-              <CourseCard upcomingClass={course} onClick={() => setModalOpened(true)}/>
+              <CourseCard upcomingClass={course} onClick={() => {
+                setCourseModalOpened(true);
+                setModalCourse(course);
+              }}/>
             )}
           </For>
         </Carousel>
+        <CourseModal course={modalCourse()} open={courseModalOpened()} setOpen={setCourseModalOpened} />
       </Section>
     </NormalFlow>
   )
