@@ -3,7 +3,8 @@ import { styled } from "solid-styled-components";
 import { BsBodyText } from 'solid-icons/bs'
 import { setAuthStore } from "../store/authStore";
 import { useNavigate } from "@solidjs/router";
-import { User } from "../store/authStore";
+import { AuthStore } from "../store/authStore";
+import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
 
 const Auth: Component = () => {
@@ -14,18 +15,16 @@ const Auth: Component = () => {
   const [useFaceAuth, setUseFaceAuth] = createSignal(false);
 
   const handleSubmit = () => {
-    setAuthStore('user', {
-      username: "test",
-      userId: "test",
-      email: "test",
-      token: "test",
-    })
+    setAuthStore('name', "Chan Yat Fu")
+    setAuthStore('studentId', '3035690001')
+    setAuthStore('email', 'chanyatfu0616@gmail.com')
+    setAuthStore('sessionId', uuidv4())
     navigate('/home')
   }
 
-  const setUser = (params: User) => {
-    setAuthStore('user', params)
-  }
+  // const setUser = (params: User) => {
+  //   setAuthStore('user', params)
+  // }
 
   const activateFaceAuth = async () => {
     const accessCamera = async () => {
@@ -68,7 +67,7 @@ const Auth: Component = () => {
       .then((res) => (res.data))
       .then((data) => {
         if (data !== "None") {
-          setUser(data)
+          // setUser(data)
           navigate('/home')
         }
       })

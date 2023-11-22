@@ -24,7 +24,7 @@ const UpcomingClassModal: Component<{
               &nbsp@&nbsp
               {props.upcomingClass.classroomAddress}
               &nbsp/&nbsp
-              <a href={props.upcomingClass.zoomLink}
+              <a href={props.upcomingClass.zoomLink} target="_blank"
                 class={css`&:visited {color: white}`}>Zoom</a>
             </div>
             <h2>{props.upcomingClass.courseName}</h2>
@@ -33,7 +33,7 @@ const UpcomingClassModal: Component<{
         <Content>
           <For each={props.couseMaterial}>{(material, i) =>
             <MaterialItem>
-              <h4><a href={material.url}>{material.title}</a></h4>
+              <h4><a href={material.url} target="_blank">{material.title}</a></h4>
               <div>{material.description}</div>
             </MaterialItem>
           }

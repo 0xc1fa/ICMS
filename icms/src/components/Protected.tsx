@@ -3,7 +3,7 @@ import { Component, JSX, Show } from "solid-js";
 import { authStore } from "../store/authStore";
 
 function isAuthorized() {
-  return (authStore.user) ? true : false;
+  return (authStore.studentId) ? true : false;
 }
 
 const Protected: Component<{ children?: JSX.Element | JSX.Element[] }> = (props) => {

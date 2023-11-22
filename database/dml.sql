@@ -31,6 +31,8 @@ CREATE TABLE `Class` (
   `class_id` INT NOT NULL,
   `class_time` DATETIME NOT NULL,
   `classroom_id` INT NOT NULL,
+  `teacher_message` VARCHAR(255),
+  `zoom_link` VARCHAR(1023),
   PRIMARY KEY (`class_id`, `course_id`),
   FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`) ON DELETE CASCADE,
   FOREIGN KEY (`classroom_id`) REFERENCES `Classroom`(`classroom_id`) ON DELETE CASCADE
@@ -66,6 +68,7 @@ CREATE TABLE `Material` (
   `title` VARCHAR(255) NOT NULL,
   `url` VARCHAR(255) NOT NULL,
   `last_update` DATETIME NOT NULL,
+  `description` VARCHAR(255),
   PRIMARY KEY (`material_id`, `course_id`),
   FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
