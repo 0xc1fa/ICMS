@@ -8,18 +8,16 @@ const UpcomingClassCard: Component<{
   onClick: (e: MouseEvent) => void
 }> = (props) => {
   return (
-    // <a href={props.upcomingClass.zoomLink} target="_blank" style={{ "text-decoration": "none" }}>
-      <Card onClick={props.onClick}>
-        <hgroup>
-          <b>{props.upcomingClass.courseCode}</b>
-          <h2>{props.upcomingClass.courseName}</h2>
-        </hgroup>
-        <TwoSide>
-          <span>{props.upcomingClass.courseTime} @ {props.upcomingClass.classroomAddress}</span>
-          <span>{props.upcomingClass.teacherMessage}</span>
-        </TwoSide>
-      </Card>
-    // </a>
+    <Card onClick={props.onClick}>
+      <hgroup>
+        <b>{props.upcomingClass.courseCode}</b>
+        <h2>{props.upcomingClass.courseName}</h2>
+      </hgroup>
+      <TwoSide>
+        <span>{props.upcomingClass.courseTime} @ {props.upcomingClass.classroomAddress}</span>
+        <span>{props.upcomingClass.teacherMessage}</span>
+      </TwoSide>
+    </Card>
   )
 }
 
@@ -31,7 +29,7 @@ const Card = styled('div')`
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   padding: 1rem;
   max-width: 900px;
-  margin-top: 2rem;
+  margin: 0.5rem 0;
   cursor: pointer;
 
   &:hover {

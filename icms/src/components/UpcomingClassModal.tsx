@@ -1,8 +1,8 @@
 import { Modal } from "@suid/material"
-import { Component, Setter } from "solid-js"
+import { Component, Setter, For } from "solid-js"
 import { styled } from "solid-styled-components"
 import { UpcomingClassItem } from "../dummydata/upcomingClass"
-import { CourseMaterial } from "../dummydata/courseMaterial"
+import { CourseMaterial } from "../dummydata/dummyCourseMaterial"
 import { BiRegularX } from 'solid-icons/bi'
 import { css } from "solid-styled-components";
 
@@ -31,7 +31,15 @@ const UpcomingClassModal: Component<{
             <h2>{props.upcomingClass.courseName}</h2>
           </hgroup>
         </Header>
-
+        <Content>
+          <For each={props.couseMaterial}>{(material, i) =>
+            <MaterialItem>
+              <h4><a href={material.url}>{material.title}</a></h4>
+              <div>{material.description}</div>
+            </MaterialItem>
+          }
+          </For>
+        </Content>
         <Cross onClick={() => props.setOpen(false)}/>
       </Container>
     </ModalLayout>
@@ -64,6 +72,17 @@ const Header = styled('div')`
   flex-direction: column;
   justify-content: end;
   padding: 0.5rem 1rem;
+`
+
+const Content = styled('div')`
+  padding: 1rem;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  height: 22rem;
+`
+
+const MaterialItem = styled('div')`
+
 `
 
 const Cross = styled(BiRegularX)`

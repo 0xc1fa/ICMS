@@ -1,9 +1,10 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 import mysql.connector
+from pydantic import BaseModel
 
 load_dotenv(".env.local")
 
@@ -58,6 +59,18 @@ def get_student_by_id(id):
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
+
+
+def face_check(file) -> str: #student_id
+    ...
+
+class FaceProps(BaseModel):
+    image: UploadFile
+@app.post('/face')
+def check_face(argu: FaceProps):
+    return { 'student_id': face_check(argu.image)}
+
+
 
 
 if __name__ == "__main__":

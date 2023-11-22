@@ -1,4 +1,6 @@
-const loginHistory = [
+import { LoginHistory } from "../@types/LoginHistory";
+
+export const dummyLoginHistory: LoginHistory[] = [
   {
     id: 1,
     loginDate: '1st Nov 2021',
@@ -67,4 +69,4 @@ const loginHistory = [
   },
 ];
 
-export default loginHistory;
+export default dummyLoginHistory;
