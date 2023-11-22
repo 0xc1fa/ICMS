@@ -33,6 +33,7 @@ const Page = styled('div')`
   height: 100vh;
   display: flex;
   flex-direction: row;
+  flex: 1 0 auto;
 `
 
 const Sidebar = styled('aside')`
@@ -46,6 +47,8 @@ const Sidebar = styled('aside')`
   box-sizing: border-box;
   padding: 0.75rem;
   padding-top: 2.5rem;
+  flex-shrink: 0;
+  overflow: hidden;
 
   & a {
     display: block;

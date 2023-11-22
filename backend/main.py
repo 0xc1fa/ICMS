@@ -1,10 +1,11 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 import datetime
 import mysql.connector
+from pydantic import BaseModel
 import check_face
 
 load_dotenv(".env.local")
@@ -60,6 +61,7 @@ def get_student_by_id(id):
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
+
 
 
 @app.get("/timetable/get/{id}")
@@ -149,5 +151,6 @@ def face_to_id():
     else:
         return {"student_id": result}
 
+      
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000)

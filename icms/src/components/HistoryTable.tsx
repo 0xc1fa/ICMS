@@ -1,4 +1,4 @@
-import { 
+import {
   Table,
   TableBody,
   TableCell,
@@ -49,7 +49,7 @@ const HistoryTable: Component<{ userId?: string }> = () => {
       </Table>
     </TableContainer>
   )
-  
+
 }
 
 const StyledTableRow = styled(TableRow)`
