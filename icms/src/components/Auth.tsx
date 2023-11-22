@@ -1,10 +1,10 @@
 import { Component, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 import { BsBodyText } from 'solid-icons/bs'
-import { setAuthStore } from "../store/authStore";
+import { setAuthStore, authStore } from "../store/authStore";
 import { useNavigate } from "@solidjs/router";
 import { AuthStore } from "../store/authStore";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 import axios from "axios";
 
 const Auth: Component = () => {
@@ -14,11 +14,20 @@ const Auth: Component = () => {
   const navigate = useNavigate();
   const [useFaceAuth, setUseFaceAuth] = createSignal(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setAuthStore('name', "Chan Yat Fu")
     setAuthStore('studentId', '3035690001')
     setAuthStore('email', 'chanyatfu0616@gmail.com')
-    setAuthStore('sessionId', uuidv4())
+    setAuthStore('sessionId', uuid4())
+    // await axios.post(
+    //   `http://localhost:8000/add-login-session/`, {},
+    //   {
+    //     params: {
+    //       student_id: authStore.studentId,
+    //       session_id: authStore.sessionId,
+    //     }
+    //   }
+    // )
     navigate('/home')
   }
 

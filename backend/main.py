@@ -7,6 +7,7 @@ import datetime
 import mysql.connector
 from pydantic import BaseModel
 import check_face
+import uuid
 
 load_dotenv(".env.local")
 
@@ -157,13 +158,37 @@ def upcoming_class_get(id: str):
     cursor.execute(cmd)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
-    # val = "Not found" if not rows else "ok"
     return {"status": "okay", "rows": rows}
 
 @app.get("/login-history/{id}")
 def get_login_history(id: str):
     cursor = cnx.cursor()
     cursor.execute(f"SELECT * FROM LoginHistory where student_id = {id};")
+    rows = [dict(zip(cursor.column_names, row)) for row in cursor]
+    cursor.close()
+    return {"status": "ok", "rows": rows}
+
+@app.put("/update-login-session/")
+def update_login_session(session_id: str):
+    cursor = cnx.cursor()
+    command = f"""
+        UPDATE `LoginHistory`
+        SET login_duration = NOW() - login_time
+        WHERE session_id = '{session_id}';
+    """
+    cursor.execute(command)
+    rows = [dict(zip(cursor.column_names, row)) for row in cursor]
+    cursor.close()
+    return {"status": "ok", "rows": rows}
+
+
+@app.post("/add-login-session/")
+def add_login_session(session_id: str, student_id: str):
+    cursor = cnx.cursor()
+    command = f"""
+        INSERT INTO `LoginHistory` VALUES ('{student_id}', '{session_id}', 'NOW()', '0');
+    """
+    cursor.execute(command)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}

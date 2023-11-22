@@ -11,40 +11,43 @@ import CourseModal from "../components/CourseModal";
 import axios from "axios";
 import { authStore } from "../store/authStore";
 import { CourseMaterial } from "../@types/CourseMaterial";
+import { YYYYMMDD, hhmm } from "../helpers/formatDate"
 
 
 const Home: Component = () => {
 
-  const options: Intl.DateTimeFormatOptions = { year: "numeric", month: 'long', day: 'numeric' };
-
+  // const options: Intl.DateTimeFormatOptions = { year: "numeric", month: 'long', day: 'numeric' };
+  const [currentTime, setCurrentTime] = createSignal(new Date(Date.now()));
   const [upcomingClass, setUpcomingClass] = createSignal<UpcomingClassItem | null>(null)
   const [upcomingClassMaterial, setUpcomingClassMaterial] = createSignal<CourseMaterial[] | null>(null)
   const [modalCourse, setModalCourse] = createSignal(dummyCourseInfo[0])
-  const dateTimeFormat = new Intl.DateTimeFormat('en-US', options);
-  const [loginTime, setLoginTime] = createSignal(dateTimeFormat.format(Date.now()));
+  // const dateTimeFormat = new Intl.DateTimeFormat('en-US', options);
+  const [loginTime, setLoginTime] = createSignal(`${YYYYMMDD(currentTime())} ${hhmm(currentTime())}`);
   const [upcomingClassModalOpened, setUpcomingClassModalOpened] = createSignal(false);
   const [courseModalOpened, setCourseModalOpened] = createSignal(false);
   const [allCourseInfo, setAllCourseInfo] = createSignal<CourseInfo[]>([]);
 
   onMount(async () => {
     const upcomingClassResult = (await axios.get(`http://localhost:8000/upcoming-class/get/${authStore.studentId}`)).data.rows
-    const upcomingClass = upcomingClassResult.map((row: any) => ({
+    const upcomingClassMapping = upcomingClassResult.map((row: any) => ({
       courseCode: row.course_id,
       courseName: row.course_name,
-      courseTime: row.class_time,
+      courseTime: `${YYYYMMDD(new Date(row.class_time))} ${hhmm(new Date(row.class_time))}`,
       classroomAddress: row.classroom_address,
       teacherMessage: row.teacher_message,
       zoomLink: row.zoom_link,
     }))
-    setUpcomingClass(upcomingClass[0])
+    setUpcomingClass(Array.isArray(upcomingClass) ? upcomingClassMapping[0] : null)
 
-    const upcomingClassMaterialResult = (await axios.get(`http://localhost:8000/material/get/${upcomingClass[0].courseCode}`)).data.rows
-    setUpcomingClassMaterial(upcomingClassMaterialResult.map((row: any) => ({
-      id: row.material_id,
-      title: row.title,
-      description: row.description,
-      url: row.url,
-    })))
+    if (upcomingClass() !== null) {
+      const upcomingClassMaterialResult = (await axios.get(`http://localhost:8000/material/get/${upcomingClass()!.courseCode}`)).data.rows
+      setUpcomingClassMaterial(upcomingClassMaterialResult.map((row: any) => ({
+        id: row.material_id,
+        title: row.title,
+        description: row.description,
+        url: row.url,
+      })))
+    }
 
     const allCourseInfo = (await axios.get(`http://localhost:8000/course/get/${authStore.studentId}`)).data.rows
     console.log(allCourseInfo)
@@ -61,6 +64,14 @@ const Home: Component = () => {
 
   })
 
+  const UpcomingClassCardOrNull = () => (
+    upcomingClass() === null ?
+    <b>No upcoming class</b> :
+    <>
+      <UpcomingClassCard upcomingClass={upcomingClass()!} onClick={() => setUpcomingClassModalOpened(true)} />
+      <UpcomingClassModal upcomingClass={upcomingClass()!} couseMaterial={upcomingClassMaterial()!} open={upcomingClassModalOpened()} setOpen={setUpcomingClassModalOpened} />
+    </>
+  )
 
   return (
     <NormalFlow>
@@ -68,12 +79,7 @@ const Home: Component = () => {
       <p>Last login at: {loginTime()}</p>
       <Section>
         <h3>Upcoming Class</h3>
-        {upcomingClass() === null ? <b>No upcoming class</b> :
-        <>
-          <UpcomingClassCard upcomingClass={upcomingClass()!} onClick={() => setUpcomingClassModalOpened(true)}/>
-          <UpcomingClassModal upcomingClass={upcomingClass()!} couseMaterial={upcomingClassMaterial()!} open={upcomingClassModalOpened()} setOpen={setUpcomingClassModalOpened} />
-        </>
-        }
+        <UpcomingClassCardOrNull/>
       </Section>
       <Section>
         <h3>All Courses</h3>
