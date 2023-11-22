@@ -144,14 +144,15 @@ def upcoming_class_get(id: str):
             Classroom.classroom_address classroom_address,
             Course.course_id course_id,
             Class.teacher_message teacher_message,
-            Class.zoom_link zoom_link
+            Class.zoom_link zoom_link,
+            Class.duration_hour duration_hour
         FROM Student
             LEFT JOIN Enrollment ON (Student.student_id = Enrollment.student_id)
             LEFT JOIN Course ON (Enrollment.course_id = Course.course_id)
             LEFT JOIN Class ON (Enrollment.course_id = Class.course_id)
             LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
         WHERE Student.student_id = '{id}'
-            AND Class.class_time BETWEEN NOW() AND NOW() + INTERVAL 1 HOUR
+            AND NOW() BETWEEN DATE_ADD(Class.class_time, INTERVAL -1 HOUR) AND DATE_ADD(Class.class_time, INTERVAL Class.duration_hour HOUR)
         ORDER BY Class.class_time ASC
         LIMIT 1;
     """

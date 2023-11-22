@@ -8,7 +8,7 @@ import { v4 as uuid4 } from 'uuid';
 import axios from "axios";
 
 const Auth: Component = () => {
-
+  
   let videoRef: HTMLVideoElement | undefined;
   let stream: MediaStream | undefined;
   const navigate = useNavigate();

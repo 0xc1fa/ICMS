@@ -91,10 +91,6 @@ const Home: Component = () => {
           </>
         }
       </Section>
-      <Section>
-        <h3>Timetable</h3>
-        <WeekView/>
-      </Section>
     </NormalFlow>
   )
 }

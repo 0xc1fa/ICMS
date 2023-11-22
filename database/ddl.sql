@@ -14,8 +14,8 @@ INSERT INTO `Course` VALUES ('COMP3111', 'Software Engineering', 'A course about
 INSERT INTO `Course` VALUES ('COMP3278', 'Introduction to database management system', 'The course that you are currently enrolling');
 INSERT INTO `Course` VALUES ('MATH3333', 'Linear Algebar', 'This is an introductory course on linear algebra, which is a prerequisite for many courses in mathematics, statistics, engineering, and the sciences.');
 
-INSERT INTO `Class` VALUES ('COMP3111', '1', '2023-11-23 05:30:00', '1', 'Welcome to COMP3111', 'https://zoom.us/j/123456789', 2);
-INSERT INTO `Class` VALUES ('COMP3111', '2', '2023-11-23 07:30:00', '2', 'Bring your laptop', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('COMP3111', '1', '2023-11-23 03:30:00', '1', 'Welcome to COMP3111', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('COMP3111', '2', '2023-11-23 04:30:00', '2', 'Bring your laptop', 'https://zoom.us/j/123456789', 2);
 INSERT INTO `Class` VALUES ('COMP3278', '1', '2023-11-24 13:30:00', '3', 'have quiz today', 'https://zoom.us/j/123456789', 1);
 INSERT INTO `Class` VALUES ('COMP3278', '2', '2023-11-25 14:30:00', '3', 'More quiz today', 'https://zoom.us/j/123456789', 2);
 INSERT INTO `Class` VALUES ('MATH3333', '1', '2023-11-26 16:30:00', '4', 'Endless assignments', 'https://zoom.us/j/123456789', 1);

@@ -78,7 +78,7 @@ const DayColumn: Component<{
   )
 
   const overlapHour = (classSlot: ClassTimeSlot, hour: string): boolean => {
-    return true;
+    // return true;
     console.log(classSlot.duration_hour)
     for (let i = 0; i < classSlot.duration_hour; i++) {
       let classNow = new Date(classSlot.class_time)
@@ -97,7 +97,7 @@ const DayColumn: Component<{
       <DayHeader>{daysOfWeek[props.day]}</DayHeader>
       <For each={hours}>
         {hour => {
-          console.log(props.classes)
+          // console.log(props.classes)
           for (const classSlot of props.classes) {
             // overlapHour(classSlot, `${hour}:30`)
             // console.log()
