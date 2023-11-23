@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
@@ -8,6 +8,9 @@ import mysql.connector
 from pydantic import BaseModel
 import check_face
 import uuid
+from smtplib import SMTP
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 load_dotenv(".env.local")
 
@@ -217,19 +220,99 @@ def get_week_class(student_id: str):
             Class.class_time,
             Classroom.classroom_address,
             Class.teacher_message,
-            Class.duration_hour
+            Class.duration_hour,
+            Course.course_name
         FROM Student
             LEFT JOIN Enrollment ON (Student.student_id = Enrollment.student_id)
             LEFT JOIN Class ON (Enrollment.course_id = Class.course_id)
             LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
+            LEFT JOIN Course ON (Class.course_id = Course.course_id)
         WHERE Class.class_time BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY)
   AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 7 DAY)
             AND Student.student_id = '{student_id}'
     """
+#     command = f"""
+#         SELECT
+#             Class.course_id,
+#             Class.class_time,
+#             Classroom.classroom_address,
+#             Class.teacher_message,
+#             Class.duration_hour,
+#             Course.course_name
+#         FROM Student
+#             LEFT JOIN Enrollment ON (Student.student_id = Enrollment.student_id)
+#             LEFT JOIN Class ON (Enrollment.course_id = Class.course_id)
+#             LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
+#             LEFT JOIN Course ON (Class.course_id = Course.course_id)
+#         WHERE Class.class_time BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY)
+#   AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 7 DAY)
+#             AND Student.student_id = '{student_id}'
+#     """
     cursor.execute(command)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
     cursor.close()
     return {"status": "ok", "rows": rows}
+
+
+# @app.post(path="/send-email/")
+# def send_email(class_id: str, recipient: str):
+#     cursor = cnx.cursor()
+#     command = f"""
+#         SELECT
+#             Class.course_id,
+#             Class.class_time,
+#             Classroom.classroom_address,
+#             Class.teacher_message,
+#             Class.duration_hour,
+#             Course.course_name,
+#             Class.zoom_link
+#         FROM Class
+#             LEFT JOIN Course ON (Class.course_id = Course.course_id)
+#             LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
+#         WHERE Class.class_id = '{class_id}'
+#     """
+#     cursor.execute(command)
+#     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
+#     cursor.close()
+#     row = rows[0]
+
+#     cursor = cnx.cursor()
+#     command = f"""
+#         SELECT
+#             Material.title title,
+#             Material.url url
+#         FROM Material
+#         WHERE Material.course_id = '{row["course_id"]}'
+#     """
+#     cursor.execute(command)
+#     materials = [dict(zip(cursor.column_names, row)) for row in cursor]
+#     cursor.close()
+
+#     msg = MIMEMultipart('alternative')
+#     msg['Subject'] = f'Course {row["course_id"]} information'
+#     msg['From'] = recipient
+#     msg['To'] = recipient
+#     html_content = f"""
+# <h2>{row['course_id']}: {row['course_name']}<h2>
+# <h4>Class Time: {row['class_time']}</h4>
+# <h4>Location: {row['classroom_address']}</h4>
+# <h4>Teacher Message: {row['teacher_message']}</h4>
+# <h4>Zoom Link: {row['zoom_link']}</h4>
+# ------------------------
+# <h3>Course Material</h3>
+# """ + "\n".join([f'<h4><a href="{material["url"]}"target="__blank">{material["title"]}</a></h4>' for material in materials])
+
+#     # Add HTML content
+#     part = MIMEText(html_content, 'html')
+#     msg.attach(part)
+#     try:
+#         with SMTP('smtp.gmail.com', port=587) as server:
+#             server.starttls()
+#             server.login('chanyatfu0616@gmail.com', 'aaig dxpw koju ggte')
+#             server.sendmail('chanyatfu0616@gmail.com', recipient, msg.as_string())
+#         return {"message": "Email sent successfully"}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
 
 
 if __name__ == "__main__":

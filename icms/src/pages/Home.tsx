@@ -74,6 +74,7 @@ const Home: Component = () => {
               <CourseCard upcomingClass={course} onClick={() => {
                 setCourseModalOpened(true);
                 setModalCourse(course);
+                (course);
               }}/>
             )}
           </For>
@@ -84,7 +85,7 @@ const Home: Component = () => {
         <h3>Upcoming Class</h3>
         {
           upcomingClass() === null ?
-          <WeekView/> :
+          <WeekView setModalCourse={setModalCourse} setCourseModalOpened={setCourseModalOpened}/> :
           <>
             <UpcomingClassCard upcomingClass={upcomingClass()!} onClick={() => setUpcomingClassModalOpened(true)} />
             <UpcomingClassModal upcomingClass={upcomingClass()!} couseMaterial={upcomingClassMaterial()!} open={upcomingClassModalOpened()} setOpen={setUpcomingClassModalOpened} />

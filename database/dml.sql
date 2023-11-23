@@ -28,26 +28,15 @@ CREATE TABLE `Course` (
 DROP TABLE IF EXISTS `Class`;
 CREATE TABLE `Class` (
   `course_id` VARCHAR(10) NOT NULL,
-  `class_id` INT NOT NULL,
+  `class_id` VARCHAR(36) NOT NULL,
   `class_time` DATETIME NOT NULL,
   `classroom_id` INT NOT NULL,
   `teacher_message` VARCHAR(255),
   `zoom_link` VARCHAR(1023),
   `duration_hour` INT NOT NULL,
-  PRIMARY KEY (`class_id`, `course_id`),
+  PRIMARY KEY (`class_id`),
   FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`) ON DELETE CASCADE,
   FOREIGN KEY (`classroom_id`) REFERENCES `Classroom`(`classroom_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `TeacherMessage`;
-CREATE TABLE `TeacherMessage` (
-  `message_id` INT NOT NULL,
-  `course_id` VARCHAR(10) NOT NULL,
-  `message` varchar(50) NOT NULL,
-  `message_time` DATETIME NOT NULL,
-  PRIMARY KEY (`course_id`, `message_id`),
-  FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

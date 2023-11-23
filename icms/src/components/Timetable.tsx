@@ -5,6 +5,8 @@ import { styled } from "solid-styled-components";
 import axios from "axios";
 import { authStore } from "../store/authStore";
 import { hhmm } from "../helpers/formatDate";
+import { CourseInfo } from "../dummydata/dummyCourseInfo";
+import { CourseMaterial } from "../@types/CourseMaterial";
 
 const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
@@ -17,6 +19,8 @@ type ClassTimeSlot = {
   teacher_message: string
   duration_hour: number,
   weekday: number,
+  course_name: string,
+  course_material: CourseMaterial[],
 }
 
 
@@ -24,22 +28,24 @@ const TimeColumn: Component<{
 }> = () => {
 
   return (
-    <Day>
+    <Time>
       <DayHeader>&nbsp;</DayHeader>
       <For each={hours}>
         {hour => <Hour>{hour}:30</Hour>}
       </For>
-    </Day>
+    </Time>
   );
 }
 
 
 
 
-
-export const WeekView: Component = () => {
-  // const [selectedDay, setSelectedDay] = createSignal(null);
+export const WeekView: Component<{
+  setModalCourse: (course: CourseInfo) => void,
+  setCourseModalOpened: (opened: boolean) => void,
+}> = (props) => {
   const [classes, setClasses] = createSignal<ClassTimeSlot[]>([])
+  const [classArray, setClassArray] = createSignal<(ClassTimeSlot | null)[][]>([])
 
   onMount(async () => {
     const classesResponse = await axios.get('http://localhost:8000/week-class/', {
@@ -54,27 +60,51 @@ export const WeekView: Component = () => {
       teacher_message: row.teacher_message,
       weekday: new Date(row.class_time).getDay(),
       duration_hour: row.duration_hour,
+      course_name: row.course_name,
+      course_material: [],
     })))
+
+    for (const classSlot of classesResponse.data.rows) {
+      const res = await axios.get(`http://localhost:8000/material/get/${classSlot.course_id}`)
+      setClasses(classes().map((row) => {
+        if (row.course_id === classSlot.course_id) {
+          return {
+            ...row,
+            course_material: res.data.rows.map((row: any) => ({
+              id: row.material_id,
+              title: row.title,
+              description: row.description,
+              url: row.url,
+            }))
+          }
+        }
+        return row
+      }))
+    }
+
+
+    for (const day in daysOfWeek) {
+      const dayArray: (ClassTimeSlot | null)[] = []
+      for (const hour of hours) {
+        let haveClass = false
+        for (const classSlot of classes()) {
+          if (isSameDay(classSlot, parseInt(day)) && overlapHour(classSlot, `${hour}:30`)) {
+            dayArray.push(classSlot)
+            haveClass = true
+          }
+        }
+        if (!haveClass) {
+          dayArray.push(null)
+        }
+      }
+      setClassArray([...classArray(), dayArray])
+    }
+    console.log(classArray())
   })
 
-  return (
-    <Week class="unselectable">
-      <TimeColumn />
-      {daysOfWeek.map((day, index) => (
-        <DayColumn day={index} classes={classes()} />
-      ))}
-    </Week>
-  );
-}
 
-
-const DayColumn: Component<{
-  day: number
-  classes: ClassTimeSlot[]
-}> = (props) => {
-
-  const isSameDay = (classSlot: ClassTimeSlot): boolean => (
-    classSlot.weekday === props.day
+  const isSameDay = (classSlot: ClassTimeSlot, day: number): boolean => (
+    classSlot.weekday === day
   )
 
   const overlapHour = (classSlot: ClassTimeSlot, hour: string): boolean => {
@@ -82,9 +112,9 @@ const DayColumn: Component<{
     console.log(classSlot.duration_hour)
     for (let i = 0; i < classSlot.duration_hour; i++) {
       let classNow = new Date(classSlot.class_time)
-      console.log(classNow, hour)
+      // console.log(hhmm(classNow), hour)
       classNow.setHours(classNow.getHours() + i)
-      console.log(classNow, hour)
+      // console.log(hhmm(classNow), hour)
       if (hhmm(classNow) === hour) {
         return true
       }
@@ -93,45 +123,85 @@ const DayColumn: Component<{
   }
 
   return (
-    <Day>
-      <DayHeader>{daysOfWeek[props.day]}</DayHeader>
-      <For each={hours}>
-        {hour => {
-          // console.log(props.classes)
-          for (const classSlot of props.classes) {
-            // overlapHour(classSlot, `${hour}:30`)
-            // console.log()
-            if (overlapHour(classSlot, `${hour}:30`)) {
-              return <Hour>{classSlot.course_id}</Hour>
+    <Week class="unselectable">
+      <TimeColumn />
+      <For each={classArray()}>
+      {(day, index) =>
+        <Day>
+          <DayHeader>{daysOfWeek[index()]}</DayHeader>
+          <For each={day}>
+          {timeSlot => {
+              if (timeSlot !== null) {
+                return (
+                  <HightlightHour onClick={() => {
+                    props.setModalCourse({
+                      courseCode: timeSlot.course_id,
+                      courseName: timeSlot.course_name,
+                      courseMaterial: timeSlot.course_material,
+                    })
+                    props.setCourseModalOpened(true)
+                  }}>
+                    <b>{timeSlot.course_id}</b>
+                    <div>{timeSlot.classroom_address}</div>
+                  </HightlightHour>
+                )
+              } else {
+                return <Hour>&nbsp;</Hour>
+              }
             }
           }
-          return <Hour>&nbsp;</Hour>
-        }}
+          </For>
+        </Day>
+      }
       </For>
-    </Day>
+    </Week>
   );
 }
 
 const Week = styled('div')`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: auto repeat(7, 1fr);
   gap: 1px;
   text-align: center;
   cursor: default;
+  background-color: #d9ede8;
+  border: 1px solid #b1c6e1;
+  border-radius: 4px;
+`
+const Time = styled('div')`
+  background-color: #45a08b;
+  color: white;
 `
 
 const Day = styled('div')`
-  border: 1px solid #e1e4e8;
+  /* border: 1px solid #e1e4e8; */
 `
 
 const DayHeader = styled('div')`
-  background-color: #f0f0f0;
   padding: 4px;
-  border-bottom: 1px solid #e1e4e8;
+  /* border-bottom: 1px solid #e1e4e8; */
+  font-weight: bold;
+  background-color: #45a08b;
+  color: white;
 `
 
 const Hour = styled('div')`
   border-top: 1px solid #e1e4e8;
   padding: 8px;
-  height: 40px;
+  height: 50px;
+`
+
+const HightlightHour = styled('div')`
+  border-top: 1px solid #e1e8e6;
+  padding: 8px;
+  height: 50px;
+  background-color: #45a08b;
+  color: white;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #58b09b;
+    color: white;
+    cursor: pointer;
+  }
 `

@@ -11,5 +11,5 @@ export const [authStore, setAuthStore] = createStore<AuthStore>({
   name: null,
   studentId: null,
   email: null,
-  sessionId: null
+  sessionId: null,
 })
