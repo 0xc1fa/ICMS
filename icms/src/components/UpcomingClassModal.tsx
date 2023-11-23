@@ -5,6 +5,9 @@ import { UpcomingClassItem } from "../dummydata/upcomingClass"
 import { CourseMaterial } from "../@types/CourseMaterial"
 import { BiRegularX } from 'solid-icons/bi'
 import { css } from "solid-styled-components";
+import { AiOutlineMail } from 'solid-icons/ai'
+import axios from "axios";
+import { authStore } from "../store/authStore"
 
 const UpcomingClassModal: Component<{
   upcomingClass: UpcomingClassItem,
@@ -16,6 +19,12 @@ const UpcomingClassModal: Component<{
     <ModalLayout open={props.open}>
       <Container>
         <Header>
+          <div onClick={() => axios.post('http://localhost:8000/send-email/', {}, {
+            params: {
+              class_id: props.upcomingClass.classId,
+              recipient: authStore.email
+            }
+          })}><AiOutlineMail /></div>
           <hgroup>
             <div>
               <b>{props.upcomingClass.courseCode}</b>

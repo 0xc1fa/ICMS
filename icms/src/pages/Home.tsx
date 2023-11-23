@@ -35,6 +35,7 @@ const Home: Component = () => {
       classroomAddress: row.classroom_address,
       teacherMessage: row.teacher_message,
       zoomLink: row.zoom_link,
+      classId: row.class_id,
     }))
     setUpcomingClass(upcomingClassMapping.length > 0 ? upcomingClassMapping[0] : null);
 

@@ -14,6 +14,7 @@ export type UpcomingClassItem = {
   classroomAddress: string,
   teacherMessage: string,
   zoomLink: string,
+  classId: string,
 }
 
 
