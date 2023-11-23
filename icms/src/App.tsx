@@ -10,6 +10,7 @@ import History from './pages/History'
 import Setting from './pages/Setting'
 import { authStore } from "./store/authStore";
 import axios from 'axios';
+import { Toaster } from 'solid-toast';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="/*" component={NotFound} />
         </Routes>
       </Suspense>
+      <Toaster />
     </>
   )
 }

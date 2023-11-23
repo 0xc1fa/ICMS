@@ -8,7 +8,7 @@ import { v4 as uuid4 } from 'uuid';
 import axios from "axios";
 
 const Auth: Component = () => {
-  
+
   let videoRef: HTMLVideoElement | undefined;
   let stream: MediaStream | undefined;
   const navigate = useNavigate();
@@ -46,12 +46,15 @@ const Auth: Component = () => {
               setAuthStore('studentId', student_id)
               console.log(student_id)
               axios.get(`http://localhost:8000/student/get/${student_id}`)
-              .then((res) => (res.data.rows))
+              .then((res) => (res.data.rows[0]))
               .then(row => {
                 console.log(row)
                 setAuthStore('name', row.student_name)
                 setAuthStore('email', row.email)
                 setAuthStore('sessionId', uuid4())
+                console.log(row.student_id)
+                console.log(authStore)
+                console.log(row)
                 axios.post(
                   `http://localhost:8000/add-login-session/`, {},
                   {

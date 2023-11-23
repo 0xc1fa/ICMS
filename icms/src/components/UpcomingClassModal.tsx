@@ -8,6 +8,10 @@ import { css } from "solid-styled-components";
 import { AiOutlineMail } from 'solid-icons/ai'
 import axios from "axios";
 import { authStore } from "../store/authStore"
+import toast, { Toaster } from 'solid-toast';
+
+
+const notify = () => toast('Email sent!');
 
 const UpcomingClassModal: Component<{
   upcomingClass: UpcomingClassItem,
@@ -19,12 +23,16 @@ const UpcomingClassModal: Component<{
     <ModalLayout open={props.open}>
       <Container>
         <Header>
-          <div onClick={() => axios.post('http://localhost:8000/send-email/', {}, {
-            params: {
-              class_id: props.upcomingClass.classId,
-              recipient: authStore.email
-            }
-          })}><AiOutlineMail /></div>
+          <MailButton onClick={() => {
+            axios.post('http://localhost:8000/send-email/', {}, {
+              params: {
+                class_id: props.upcomingClass.classId,
+                recipient: authStore.email
+              }
+            })
+            notify();
+          }
+          }><AiOutlineMail /></MailButton>
           <hgroup>
             <div>
               <b>{props.upcomingClass.courseCode}</b>
@@ -70,6 +78,12 @@ const Container = styled('div')`
   border-radius: 1rem;
   background-color: rgba(241,245,244,255);
   overflow: hidden;
+`
+
+const MailButton = styled('div')`
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
 `
 
 const Header = styled('div')`

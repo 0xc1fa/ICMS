@@ -67,7 +67,6 @@ def get_student_by_id(id: str):
     return {"status": "ok", "rows": rows}
 
 
-
 @app.get("/timetable/get/{id}")
 def get_timetable_by_id(id):
     cursor = cnx.cursor()
