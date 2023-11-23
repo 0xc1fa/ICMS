@@ -35,13 +35,13 @@ INSERT INTO `Class` VALUES ('COMP3361', '54ba4ac4-5877-40ef-bc42-fdf12b0aa276', 
 INSERT INTO `Class` VALUES ('CAES9541', '9f4905d6-6c20-4546-ba98-874101fadc83', '2023-11-24 15:30:00', '8', 'Reading week this time extra lecture', 'https://zoom.us/j/123456789', 2);
 
 
-INSERT INTO `LoginHistory` VALUES ('3035690001', 'ae48a13d-a68f-47eb-a225-188e56807327', '2018-11-01 10:30:00', '32');
-INSERT INTO `LoginHistory` VALUES ('3035690001', 'fb1cdf8a-971c-4ec5-87a1-3e48cdef309c', '2018-11-01 10:30:00', '503');
-INSERT INTO `LoginHistory` VALUES ('3035690001', '94750f3f-3709-4705-8682-8c108fd618a7', '2018-11-01 10:30:00', '1021');
-INSERT INTO `LoginHistory` VALUES ('3035690001', '195da1c5-1c9f-1087-1a2c-8c72b6dfc18a1', '2018-11-01 10:30:00', '42');
-INSERT INTO `LoginHistory` VALUES ('3035690001', 'b948da1d-1998-ac01-0135-a7c789d119b81', '2018-11-01 10:30:00', '27');
-INSERT INTO `LoginHistory` VALUES ('3035690001', '51c238b4-d3a8-be11-1473-c55108f156487', '2018-11-01 10:30:00', '3015');
-INSERT INTO `LoginHistory` VALUES ('3035690001', 'b1d234e7-9937-1341-d81a-86828c1618a7', '2018-11-01 10:30:00', '492');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'ae48a13d-a68f-47eb-a225-188e56807327', '2018-11-21 10:31:57', '32');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'fb1cdf8a-971c-4ec5-87a1-3e48cdef309c', '2018-11-21 13:19:22', '503');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '94750f3f-3709-4705-8682-8c108fd618a7', '2018-11-22 15:17:36', '1021');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '195da1c5-1c9f-1087-1a2c-8c72b6dfc18a1', '2018-11-22 17:00:08', '42');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'b948da1d-1998-ac01-0135-a7c789d119b81', '2018-11-23 09:22:37', '27');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '51c238b4-d3a8-be11-1473-c55108f156487', '2018-11-24 21:58:52', '3015');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'b1d234e7-9937-1341-d81a-86828c1618a7', '2018-11-25 11:48:03', '492');
 
 INSERT INTO `Material` VALUES ('1', 'COMP3278', 'Lecture 1', 'https://www.dropbox.com/scl/fi/6aqbundo0p3i200vm45ja/Lecture_1_Introduction.pdf?rlkey=44084i8m3ojuiyq1bi7tk3igo&dl=0', '2018-11-01 10:30:00', 'Lecture_1_Introduction.pdf');
 INSERT INTO `Material` VALUES ('2', 'COMP3278', 'Lecture 2', 'https://www.dropbox.com/scl/fi/bgrkm0i5f20gff4ievz1z/Lecture_2_ER_model.pdf?rlkey=qxs4tfprk4vf0orwqchmeabwn&dl=0', '2018-09-01 17:10:00', 'Lecture_2_ER_model.pdf');
