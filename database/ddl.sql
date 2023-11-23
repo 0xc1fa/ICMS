@@ -3,11 +3,11 @@ INSERT INTO `Student` VALUES ('3035690202', 'Chan Yi Man', "chanyiman2@gmail.com
 INSERT INTO `Student` VALUES ('3035690203', 'Chan Sam Man', "chansamman1234@gmail.com", 'password3');
 INSERT INTO `Student` VALUES ('3035690001', 'Chan Tai Man', "chanyatfu0616@gmail.com", 'password');
 
-INSERT INTO `Classroom` VALUES ('1', 'Room 1');
-INSERT INTO `Classroom` VALUES ('2', 'Room 2');
-INSERT INTO `Classroom` VALUES ('3', 'Room 3');
-INSERT INTO `Classroom` VALUES ('4', 'Room 4');
-INSERT INTO `Classroom` VALUES ('5', 'Room 5');
+INSERT INTO `Classroom` VALUES ('1', 'LE3');
+INSERT INTO `Classroom` VALUES ('2', 'KKLG1.05');
+INSERT INTO `Classroom` VALUES ('3', 'MB217');
+INSERT INTO `Classroom` VALUES ('4', 'CYM 105');
+INSERT INTO `Classroom` VALUES ('5', 'TTB210');
 INSERT INTO `Classroom` VALUES ('6', 'CPD-G.02');
 INSERT INTO `Classroom` VALUES ('7', 'KB132');
 INSERT INTO `Classroom` VALUES ('8', 'CPD-1.43');
@@ -26,20 +26,24 @@ INSERT INTO `Class` VALUES ('COMP3111', '429a9167-3a23-4f64-beed-535fbb31afee', 
 INSERT INTO `Class` VALUES ('COMP3278', '1f3784f5-b278-4d08-919e-1449592cde4b', '2023-11-24 13:30:00', '3', 'have quiz today', 'https://zoom.us/j/123456789', 1);
 INSERT INTO `Class` VALUES ('COMP3278', '72e777c2-76f6-42f9-917d-6c41c7a41a33', '2023-11-25 14:30:00', '3', 'More quiz today', 'https://zoom.us/j/123456789', 2);
 INSERT INTO `Class` VALUES ('MATH3333', '8c92197a-e6cb-44d0-aa89-9d7bc392ee54', '2023-11-26 16:30:00', '4', 'Endless assignments', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('MATH3333', '4d0dfcac-79d2-4b88-8d8f-8f06ff887821', '2023-11-27 15:30:00', '5', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('ELEC4342', 'f68098ad-a8c8-4e58-836d-670a36dabbcf', '2023-11-20 09:30:00', '6', 'Almost end sem', 'https://zoom.us/j/123456789', 2);
-INSERT INTO `Class` VALUES ('COMP3278', 'afef8f36-092d-414d-8918-f8764a38f6df', '2023-11-20 14:30:00', '9', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('ELEC3361', 'a24cc2e7-fb38-480b-a467-fb7db68c5579', '2023-11-21 09:30:00', '7', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('MATH3333', '4d0dfcac-79d2-4b88-8d8f-8f06ff887821', '2023-11-27 15:30:00', '5', 'Also tests', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('ELEC4342', 'f68098ad-a8c8-4e58-836d-670a36dabbcf', '2023-11-20 09:30:00', '6', 'Reminder: Hand in lab report', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('COMP3278', 'afef8f36-092d-414d-8918-f8764a38f6df', '2023-11-20 14:30:00', '9', 'field trip to Google', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('ELEC3361', 'a24cc2e7-fb38-480b-a467-fb7db68c5579', '2023-11-21 09:30:00', '7', 'exam tips', 'https://zoom.us/j/123456789', 1);
 INSERT INTO `Class` VALUES ('ELEC3848', 'f2b1b331-da57-41e6-916b-abb8b63636d3', '2023-11-21 15:30:00', '10', 'Almost end sem', 'https://zoom.us/j/123456789', 3);
-INSERT INTO `Class` VALUES ('ELEC4342', '1b19529c-f368-487c-ab96-96f1d3b38a66', '2023-11-23 09:30:00', '6', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('COMP3278', '57cd4634-aa77-4b7e-8fd0-5f99bfc4cc0a', '2023-11-23 09:30:00', '9', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('COMP3361', '54ba4ac4-5877-40ef-bc42-fdf12b0aa276', '2023-11-24 09:30:00', '7', 'Almost end sem', 'https://zoom.us/j/123456789', 2);
-INSERT INTO `Class` VALUES ('CAES9541', '9f4905d6-6c20-4546-ba98-874101fadc83', '2023-11-24 15:30:00', '8', 'Almost end sem', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('ELEC4342', '1b19529c-f368-487c-ab96-96f1d3b38a66', '2023-11-23 09:30:00', '6', 'prsentation today', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('COMP3278', '57cd4634-aa77-4b7e-8fd0-5f99bfc4cc0a', '2023-11-23 09:30:00', '9', 'Mid-term at 11:00', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('COMP3361', '54ba4ac4-5877-40ef-bc42-fdf12b0aa276', '2023-11-24 09:30:00', '7', 'Bring 3 laptops', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('CAES9541', '9f4905d6-6c20-4546-ba98-874101fadc83', '2023-11-24 15:30:00', '8', 'Reading week this time extra lecture', 'https://zoom.us/j/123456789', 2);
 
 
-INSERT INTO `LoginHistory` VALUES ('3035690001', 'ae48a13d-a68f-47eb-a225-188e56807327', '2018-11-01 10:30:00', '100');
-INSERT INTO `LoginHistory` VALUES ('3035690001', 'fb1cdf8a-971c-4ec5-87a1-3e48cdef309c', '2018-11-01 10:30:00', '100');
-INSERT INTO `LoginHistory` VALUES ('3035690001', '94750f3f-3709-4705-8682-8c108fd618a7', '2018-11-01 10:30:00', '523');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'ae48a13d-a68f-47eb-a225-188e56807327', '2018-11-01 10:30:00', '32');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'fb1cdf8a-971c-4ec5-87a1-3e48cdef309c', '2018-11-01 10:30:00', '503');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '94750f3f-3709-4705-8682-8c108fd618a7', '2018-11-01 10:30:00', '1021');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '195da1c5-1c9f-1087-1a2c-8c72b6dfc18a1', '2018-11-01 10:30:00', '42');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'b948da1d-1998-ac01-0135-a7c789d119b81', '2018-11-01 10:30:00', '27');
+INSERT INTO `LoginHistory` VALUES ('3035690001', '51c238b4-d3a8-be11-1473-c55108f156487', '2018-11-01 10:30:00', '3015');
+INSERT INTO `LoginHistory` VALUES ('3035690001', 'b1d234e7-9937-1341-d81a-86828c1618a7', '2018-11-01 10:30:00', '492');
 
 INSERT INTO `Material` VALUES ('1', 'COMP3278', 'Lecture 1', 'https://www.dropbox.com/scl/fi/6aqbundo0p3i200vm45ja/Lecture_1_Introduction.pdf?rlkey=44084i8m3ojuiyq1bi7tk3igo&dl=0', '2018-11-01 10:30:00', 'Lecture_1_Introduction.pdf');
 INSERT INTO `Material` VALUES ('2', 'COMP3278', 'Lecture 2', 'https://www.dropbox.com/scl/fi/bgrkm0i5f20gff4ievz1z/Lecture_2_ER_model.pdf?rlkey=qxs4tfprk4vf0orwqchmeabwn&dl=0', '2018-09-01 17:10:00', 'Lecture_2_ER_model.pdf');
