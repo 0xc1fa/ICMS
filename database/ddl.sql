@@ -17,22 +17,22 @@ INSERT INTO `Classroom` VALUES ('10', 'CBLG205');
 INSERT INTO `Course` VALUES ('COMP3111', 'Software Engineering', 'A course about software engineering');
 INSERT INTO `Course` VALUES ('COMP3278', 'Introduction to database management system', 'The course that you are currently enrolling');
 INSERT INTO `Course` VALUES ('MATH3333', 'Linear Algebar', 'This is an introductory course on linear algebra, which is a prerequisite for many courses in mathematics, statistics, engineering, and the sciences.');
-INSERT INTO `Course` VALUES ('ELEC4342', 'Embedded machine learning', 'The group project emphasizes on exercising students’ creativity to provide innovative solutions for solving real-world problems/issues through sophisticated technologies related to IoT or embedded systems.');
-INSERT INTO `Course` VALUES ('ELEC3361', 'Natural Language Processing', 'The group project emphasizes on exercising students’ creativity to provide innovative solutions for solving real-world problems/issues through sophisticated technologies related to IoT or embedded systems.');
-INSERT INTO `Course` VALUES ('CAES9541', 'ED for EEEng', 'The group project emphasizes on exercising students’ creativity to provide innovative solutions for solving real-world problems/issues through sophisticated technologies related to IoT or embedded systems.');
+INSERT INTO `Course` VALUES ('ELEC4342', 'Embedded machine learning', 'Understand the motivations and principles for building adaptive systems based on empirical data, and how machine learning relates to the broader field of artificial intelligence');
+INSERT INTO `Course` VALUES ('ELEC3361', 'Natural Language Processing', 'Natural language processing (NLP) is the study of human language from a computational perspective.');
+INSERT INTO `Course` VALUES ('CAES9541', 'ED for EEEng', 'Many Es. This course aims to enhace critical thinking skills and promote creative thinking.');
 INSERT INTO `Course` VALUES ('ELEC3848', 'Intergrated design project', 'The group project emphasizes on exercising students’ creativity to provide innovative solutions for solving real-world problems/issues through sophisticated technologies related to IoT or embedded systems.');
 INSERT INTO `Course` VALUES ('ELEC3848', 'Intergrated design project', 'The group project emphasizes on exercising students’ creativity to provide innovative solutions for solving real-world problems/issues through sophisticated technologies related to IoT or embedded systems.');
-INSERT INTO `Course` VALUES ('COMP3361', 'Natural language processing', 'The group project emphasizes on exercising students’ creativity to provide innovative solutions for solving real-world problems/issues through sophisticated technologies related to IoT or embedded systems.');
+INSERT INTO `Course` VALUES ('COMP3361', 'Natural language processing', 'Natural language processing (NLP) is the study of human language from a computational perspective.');
 
 
-INSERT INTO `Class` VALUES ('ELEC4342', 'f68098ad-a8c8-4e58-836d-670a36dabbcf', '2023-11-20 09:30:00', '6', 'Almost end sem', 'https://zoom.us/j/123456789', 2);
-INSERT INTO `Class` VALUES ('COMP3278', 'afef8f36-092d-414d-8918-f8764a38f6df', '2023-11-20 14:30:00', '9', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('ELEC3361', 'a24cc2e7-fb38-480b-a467-fb7db68c5579', '2023-11-21 09:30:00', '7', 'Almost end sem', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('ELEC3848', 'f2b1b331-da57-41e6-916b-abb8b63636d3', '2023-11-21 15:30:00', '10', 'Almost end sem', 'https://zoom.us/j/123456789', 3);
-INSERT INTO `Class` VALUES ('ELEC4342', '1b19529c-f368-487c-ab96-96f1d3b38a66', '2023-11-23 09:30:00', '6', 'prsentation today', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('COMP3278', '57cd4634-aa77-4b7e-8fd0-5f99bfc4cc0a', '2023-11-23 09:30:00', '9', 'Mid-term at 11:00', 'https://zoom.us/j/123456789', 1);
-INSERT INTO `Class` VALUES ('COMP3361', '54ba4ac4-5877-40ef-bc42-fdf12b0aa276', '2023-11-24 09:30:00', '7', 'Bring 3 laptops', 'https://zoom.us/j/123456789', 2);
-INSERT INTO `Class` VALUES ('CAES9541', '9f4905d6-6c20-4546-ba98-874101fadc83', '2023-11-24 15:30:00', '8', 'Reading week this time extra lecture', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('ELEC4342', 'f68098ad-a8c8-4e58-836d-670a36dabbcf', '2023-11-20 09:30:00', '1', 'Welcome to ELEC4342', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('COMP3278', 'afef8f36-092d-414d-8918-f8764a38f6df', '2023-11-20 14:30:00', '2', 'Test preparation', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('ELEC3361', 'a24cc2e7-fb38-480b-a467-fb7db68c5579', '2023-11-21 09:30:00', '3', 'Reminder: hand in lab report today', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('ELEC3848', 'f2b1b331-da57-41e6-916b-abb8b63636d3', '2023-11-21 15:30:00', '4', 'Reading week this time extra lecture', 'https://zoom.us/j/123456789', 3);
+INSERT INTO `Class` VALUES ('ELEC4342', '1b19529c-f368-487c-ab96-96f1d3b38a66', '2023-11-23 09:30:00', '1', 'Prsentation today', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('COMP3278', '57cd4634-aa77-4b7e-8fd0-5f99bfc4cc0a', '2023-11-23 09:30:00', '5', 'Mid-term at 11:00', 'https://zoom.us/j/123456789', 1);
+INSERT INTO `Class` VALUES ('COMP3361', '54ba4ac4-5877-40ef-bc42-fdf12b0aa276', '2023-11-24 09:30:00', '6', 'Bring 3 laptops', 'https://zoom.us/j/123456789', 2);
+INSERT INTO `Class` VALUES ('CAES9541', '9f4905d6-6c20-4546-ba98-874101fadc83', '2023-11-24 15:30:00', '7', 'Lecture ending early at 16:00', 'https://zoom.us/j/123456789', 2);
 
 
 INSERT INTO `LoginHistory` VALUES ('3035690001', 'ae48a13d-a68f-47eb-a225-188e56807327', '2018-11-21 10:31:57', '32');
