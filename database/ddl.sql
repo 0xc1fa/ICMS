@@ -56,9 +56,9 @@ INSERT INTO `Material` VALUES ('12', 'CAES9541', 'Tutorial 1', 'https://www.drop
 INSERT INTO `Material` VALUES ('13', 'MATH3333', 'Lecture 1', 'https://www.dropbox.com/scl/fi/6p1ah02lr4mzwbhj57adf/Discrete-Math-Lecture-1.pdf?rlkey=emzue5zxwjob737q338p4ijai&dl=0', '2018-09-01 10:30:01', 'Discrete Math Lecture 1.pdf');
 INSERT INTO `Material` VALUES ('14', 'MATH3333', 'Lecture 2', 'https://www.dropbox.com/scl/fi/rn9up903tbiusajzewqcv/Discrete-Math-Lecture-2.pdf?rlkey=agp25x40i3hul9v30q6de77oj&dl=0', '2018-10-16 01:10:22', 'Discrete Math Lecture 2.pdf');
 INSERT INTO `Material` VALUES ('15', 'MATH3333', 'Tutorial 1', 'https://www.dropbox.com/scl/fi/7mg1awxojwqaa2lh75en5/Discrete-Math-T1_E.pdf?rlkey=meerg5495p0gqldlxxeaxapl6&dl=0', '2018-09-01 10:30:00', 'Discrete Math T1_E.pdf');
-INSERT INTO `Material` VALUES ('13', 'ELEC3361', 'Lecture 1', 'https://www.dropbox.com/scl/fi/s7vmljnlpem6xz0ensmgi/COMP2396_Ch1_Introduction.pdf?rlkey=shuuh7989brrlsrlbcd1m0hme&dl=0', '2018-11-16 00:10:01', 'Ch1_Introduction.pdf');
-INSERT INTO `Material` VALUES ('14', 'ELEC3361', 'Lecture 2', 'https://www.dropbox.com/scl/fi/endt10vfba34jagvvflhq/COMP2396_Ch2_Class_And_Objects-1.pdf?rlkey=li6socsqi6gg21b6yz928sz5x&dl=0', '2018-11-12 13:10:22', 'Ch2_Class_And_Objects-1.pdf');
-INSERT INTO `Material` VALUES ('15', 'ELEC3361', 'Tutorial 1', 'https://www.dropbox.com/scl/fi/7t9bl5ksao9ftyabysunr/COMP2396_Ch3_Primitives_and_References.pdf?rlkey=zwbmgt95f4847xoenqdmfgi1y&dl=0', '2018-09-16 10:30:00', 'Ch3_Primitives_and_References.pdf');
+INSERT INTO `Material` VALUES ('16', 'ELEC3361', 'Lecture 1', 'https://www.dropbox.com/scl/fi/s7vmljnlpem6xz0ensmgi/COMP2396_Ch1_Introduction.pdf?rlkey=shuuh7989brrlsrlbcd1m0hme&dl=0', '2018-11-16 00:10:01', 'Ch1_Introduction.pdf');
+INSERT INTO `Material` VALUES ('17', 'ELEC3361', 'Lecture 2', 'https://www.dropbox.com/scl/fi/endt10vfba34jagvvflhq/COMP2396_Ch2_Class_And_Objects-1.pdf?rlkey=li6socsqi6gg21b6yz928sz5x&dl=0', '2018-11-12 13:10:22', 'Ch2_Class_And_Objects-1.pdf');
+INSERT INTO `Material` VALUES ('18', 'ELEC3361', 'Tutorial 1', 'https://www.dropbox.com/scl/fi/7t9bl5ksao9ftyabysunr/COMP2396_Ch3_Primitives_and_References.pdf?rlkey=zwbmgt95f4847xoenqdmfgi1y&dl=0', '2018-09-16 10:30:00', 'Ch3_Primitives_and_References.pdf');
 
 INSERT INTO `Enrollment` VALUES ('3035690001', 'ELEC4342');
 INSERT INTO `Enrollment` VALUES ('3035690001', 'MATH3333');
