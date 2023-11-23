@@ -59,6 +59,7 @@ const Home: Component = () => {
         courseMaterial: courseMaterial
       })
     }
+    console.log(allCourseInfoWithMaterial)
     setAllCourseInfo(allCourseInfoWithMaterial)
   })
 
@@ -111,6 +112,7 @@ const Carousel = styled('div')`
   flex: 0 0 800px;
   overflow-x: hidden;
   gap: 1rem;
+  flex-wrap: wrap;
 `
 
 export default Home;

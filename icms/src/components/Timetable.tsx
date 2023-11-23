@@ -8,7 +8,7 @@ import { hhmm } from "../helpers/formatDate";
 import { CourseInfo } from "../dummydata/dummyCourseInfo";
 import { CourseMaterial } from "../@types/CourseMaterial";
 
-const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -81,6 +81,7 @@ export const WeekView: Component<{
         return row
       }))
     }
+    console.log(classes())
 
 
     for (const day in daysOfWeek) {
@@ -88,7 +89,7 @@ export const WeekView: Component<{
       for (const hour of hours) {
         let haveClass = false
         for (const classSlot of classes()) {
-          if (isSameDay(classSlot, parseInt(day)) && overlapHour(classSlot, `${hour}:30`)) {
+          if (isSameDay(classSlot, parseInt(day)) && overlapHour(classSlot, `${hour.toString().padStart(2, '0')}:30`)) {
             dayArray.push(classSlot)
             haveClass = true
           }
@@ -108,13 +109,9 @@ export const WeekView: Component<{
   )
 
   const overlapHour = (classSlot: ClassTimeSlot, hour: string): boolean => {
-    // return true;
-    console.log(classSlot.duration_hour)
     for (let i = 0; i < classSlot.duration_hour; i++) {
       let classNow = new Date(classSlot.class_time)
-      // console.log(hhmm(classNow), hour)
       classNow.setHours(classNow.getHours() + i)
-      // console.log(hhmm(classNow), hour)
       if (hhmm(classNow) === hour) {
         return true
       }

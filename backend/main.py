@@ -36,12 +36,12 @@ app.add_middleware(
 
 
 @app.get("/")
-def test_fastapi_connection():
+async def test_fastapi_connection():
     return {"status": "ok"}
 
 
 @app.get("/db")
-def test_db_connection():
+async def test_db_connection():
     cursor = cnx.cursor()
     cursor.execute("SELECT * FROM Class;")
     # using list comprehension
@@ -59,7 +59,7 @@ def test_db_connection():
 
 
 @app.get("/student/get/{id}")
-def get_student_by_id(id: str):
+async def get_student_by_id(id: str):
     cursor = cnx.cursor()
     cursor.execute(f"SELECT * FROM Student WHERE student_id = {id};")
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
@@ -68,7 +68,7 @@ def get_student_by_id(id: str):
 
 
 @app.get("/timetable/get/{id}")
-def get_timetable_by_id(id):
+async def get_timetable_by_id(id):
     cursor = cnx.cursor()
     cursor.execute(f"SELECT Class.class_time, Course.course_id, Course.course_name, Classroom.classroom_address FROM Class,Course,Classroom,Student,Enrollment WHERE Student.student_id = '{id}' AND Student.student_id = Enrollment.student_id AND Enrollment.course_id = Course.course_id AND Enrollment.course_id = Class.course_id AND Enrollment.class_id = Class.class_id AND Class.classroom_id = Classroom.classroom_id ORDER BY Class.class_time ASC;")
     '''
@@ -89,7 +89,7 @@ def get_timetable_by_id(id):
 
 
 @app.get("/teacher-message/get/{course_id}")
-def get_teacher_message_by_course_id(course_id):
+async def get_teacher_message_by_course_id(course_id):
 
     cursor = cnx.cursor()
     cursor.execute(f"SELECT TeacherMessage.message_id, TeacherMessage.message, TeacherMessage.message_time FROM TeacherMessage WHERE TeacherMessage.course_id = '{course_id}' ORDER BY message_time DESC;")
@@ -106,7 +106,7 @@ def get_teacher_message_by_course_id(course_id):
 
 
 @app.get("/course/get/{student_id}")
-def get_courses_enrolled_by_student_id(student_id):
+async def get_courses_enrolled_by_student_id(student_id):
     cursor = cnx.cursor()
     cursor.execute(f"""
         SELECT Course.course_id, Course.course_name
@@ -121,7 +121,7 @@ def get_courses_enrolled_by_student_id(student_id):
 
 
 @app.get("/material/get/{course_id}")
-def get_materials_by_course_id(course_id):
+async def get_materials_by_course_id(course_id):
     cursor = cnx.cursor()
     command = f"""
         SELECT material_id, title, url, description
@@ -136,7 +136,7 @@ def get_materials_by_course_id(course_id):
 
 
 @app.get("/upcoming-class/get/{id}")
-def upcoming_class_get(id: str):
+async def upcoming_class_get(id: str):
     cursor = cnx.cursor()
     cmd = f"""
         SELECT
@@ -155,9 +155,7 @@ def upcoming_class_get(id: str):
             LEFT JOIN Class ON (Enrollment.course_id = Class.course_id)
             LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
         WHERE Student.student_id = '{id}'
-            AND NOW() BETWEEN DATE_ADD(Class.class_time, INTERVAL -1 HOUR) AND DATE_ADD(Class.class_time, INTERVAL Class.duration_hour HOUR)
-        ORDER BY Class.class_time ASC
-        LIMIT 1;
+            AND NOW() BETWEEN DATE_ADD(Class.class_time, INTERVAL -1 HOUR) AND DATE_ADD(Class.class_time, INTERVAL Class.duration_hour HOUR);
     """
     cursor.execute(cmd)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
@@ -166,7 +164,7 @@ def upcoming_class_get(id: str):
 
 
 @app.get("/login-history/{id}")
-def get_login_history(id: str):
+async def get_login_history(id: str):
     cursor = cnx.cursor()
     cursor.execute(f"SELECT * FROM LoginHistory where student_id = {id};")
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
@@ -175,7 +173,7 @@ def get_login_history(id: str):
 
 
 @app.put("/update-login-session/")
-def update_login_session(session_id: str):
+async def update_login_session(session_id: str):
     cursor = cnx.cursor()
     command = f"""
         UPDATE `LoginHistory`
@@ -190,7 +188,7 @@ def update_login_session(session_id: str):
 
 
 @app.post("/add-login-session/")
-def add_login_session(session_id: str, student_id: str):
+async def add_login_session(session_id: str, student_id: str):
     cursor = cnx.cursor()
     command = f"""
         INSERT INTO `LoginHistory` VALUES ('{student_id}', '{session_id}', NOW(), 0);
@@ -203,7 +201,7 @@ def add_login_session(session_id: str, student_id: str):
 
 
 @app.get("/face-recognition/post")
-def face_to_id():
+async def face_to_id():
     result = check_face.check_face()
     if not result:
         return {"student_id": "none"}
@@ -212,7 +210,7 @@ def face_to_id():
 
 
 @app.get("/week-class/")
-def get_week_class(student_id: str):
+async def get_week_class(student_id: str):
     cursor = cnx.cursor()
     command = f"""
         SELECT
@@ -229,7 +227,7 @@ def get_week_class(student_id: str):
             LEFT JOIN Course ON (Class.course_id = Course.course_id)
         WHERE Class.class_time BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY)
   AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 7 DAY)
-            AND Student.student_id = '{student_id}'
+            AND Student.student_id = '{student_id}';
     """
     cursor.execute(command)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
@@ -238,7 +236,7 @@ def get_week_class(student_id: str):
 
 
 @app.post(path="/send-email/")
-def send_email(class_id: str, recipient: str):
+async def send_email(class_id: str, recipient: str):
     cursor = cnx.cursor()
     command = f"""
         SELECT
@@ -252,7 +250,7 @@ def send_email(class_id: str, recipient: str):
         FROM Class
             LEFT JOIN Course ON (Class.course_id = Course.course_id)
             LEFT JOIN Classroom ON (Class.classroom_id = Classroom.classroom_id)
-        WHERE Class.class_id = '{class_id}'
+        WHERE Class.class_id = '{class_id}';
     """
     cursor.execute(command)
     rows = [dict(zip(cursor.column_names, row)) for row in cursor]
