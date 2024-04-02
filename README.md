@@ -23,8 +23,3 @@ Face Login: Python + OpenCV (full codes provided.)
 GUI: Python GUI or Qt. (sample codes provided.)
 Database: Python + MySQL (sample codes provided.)
 Other: You can use any other Python packages if you see fit.
-
-## LLM Related
-- You are welcome to involve ChatGPTin your design loop.
-- You have toclearly discuss what and how ChatGPThelp your projects (e.g., which part you used ChatGPT, the percentage (%) of contribution of ChatGPTin the project) in the 5-min presentation. Submit all prompts and returns from ChatGPTas supplementary materials.
-- Excellent use of LLMs may have bonus points.
